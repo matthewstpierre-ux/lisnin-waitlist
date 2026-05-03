@@ -138,7 +138,7 @@ function Scene({
       <pointLight position={[0, -2, 3]} intensity={0.8} color="#ffffff" />
       <Environment preset="night" />
       {useGlb ? (
-        <Suspense fallback={<PrimitiveHeadphones mouse={mouse} />}>
+        <Suspense fallback={null}>
           <GLBHeadphones mouse={mouse} />
         </Suspense>
       ) : (
