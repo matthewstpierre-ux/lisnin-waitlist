@@ -1,9 +1,9 @@
 export const SOCIAL_LINKS = {
-  linkedin: "#",
-  twitter: "#",
-  instagram: "#",
-  facebook: "#",
-  careers: "#",
+  linkedin: "https://www.linkedin.com/company/lisnin-music-inc/",
+  twitter: "https://x.com/Lisnin_io",
+  instagram: "https://www.instagram.com/lisnin_io/",
+  facebook: "https://www.facebook.com/profile.php?id=61588922263285",
+  careers: "https://www.linkedin.com/company/lisnin-music-inc/jobs/",
 };
 
 export const FEATURES = [
