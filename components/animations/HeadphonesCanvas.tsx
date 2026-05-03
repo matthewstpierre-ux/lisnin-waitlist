@@ -5,6 +5,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
+useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
+
 // ─── GLB model loader (used when public/models/headphones.glb exists) ──────
 function GLBHeadphones({ mouse }: { mouse: React.MutableRefObject<[number, number]> }) {
   const { scene } = useGLTF("/models/headphones.glb");
