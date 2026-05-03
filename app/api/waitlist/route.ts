@@ -18,19 +18,15 @@ export async function POST(req: Request) {
 
     // Try Google Sheets via GET
     const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-    console.log("ENV KEYS:", Object.keys(process.env).filter(k => k.includes("SHEET") || k.includes("GOOGLE") || k.includes("RESEND")));
-    console.log("SHEETS_URL present:", !!sheetsUrl, sheetsUrl?.slice(0, 60));
     if (sheetsUrl) {
       try {
         const url = new URL(sheetsUrl);
         url.searchParams.set("name", trimmedName);
         url.searchParams.set("email", email);
         url.searchParams.set("timestamp", timestamp);
-        const sheetsRes = await fetch(url.toString());
-        const sheetsText = await sheetsRes.text();
-        console.log("SHEETS_RESPONSE:", sheetsRes.status, sheetsText.slice(0, 100));
+        await fetch(url.toString());
       } catch (sheetsErr) {
-        console.error("SHEETS_ERROR:", sheetsErr);
+        console.error("Sheets error:", sheetsErr);
       }
     }
 
