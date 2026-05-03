@@ -163,10 +163,10 @@ export default function HeadphonesCanvas({ useGlb = false }: { useGlb?: boolean 
   }, []);
 
   return (
-    <div style={{ width: "min(50vh, 520px)", height: "min(50vh, 520px)" }}>
+    <div style={{ width: "min(70vh, 680px)", height: "min(70vh, 680px)" }}>
       <Canvas
         dpr={[1, 1.5]}
-        camera={{ position: [0, 0.3, 6.5], fov: 38 }}
+        camera={{ position: [0, 0.3, 8], fov: 34 }}
         style={{ background: "transparent" }}
       >
         <Scene mouse={mouse} useGlb={useGlb} />
