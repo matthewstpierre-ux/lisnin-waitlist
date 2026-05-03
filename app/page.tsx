@@ -28,7 +28,7 @@ export default function Home() {
         onOpenVideo={() => setVideoOpen(true)}
       />
 
-      <main>
+      <main style={{ position: "relative", zIndex: 2 }}>
         <HeroSection onOpenWaitlist={() => setWaitlistOpen(true)} />
         <FeaturesSection onOpenWaitlist={() => setWaitlistOpen(true)} />
         <HowItWorksSection />

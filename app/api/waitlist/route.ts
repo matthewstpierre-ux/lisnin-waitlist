@@ -2,35 +2,29 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 export async function POST(req: Request) {
-  const { email, source } = await req.json();
+  const { name, email } = await req.json();
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
+  if (!name || typeof name !== "string" || name.trim().length < 1) {
+    return NextResponse.json({ error: "Name is required" }, { status: 400 });
+  }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  const beehiivKey = process.env.BEEHIIV_API_KEY;
-  const beehiivPubId = process.env.BEEHIIV_PUBLICATION_ID;
+  const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
 
   try {
-    // Add to Beehiiv
-    if (beehiivKey && beehiivPubId) {
-      await fetch(`https://api.beehiiv.com/v2/publications/${beehiivPubId}/subscriptions`, {
+    // Save to Google Sheets via Apps Script web app
+    if (sheetsUrl) {
+      await fetch(sheetsUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${beehiivKey}`,
-        },
-        body: JSON.stringify({
-          email,
-          reactivate_existing: false,
-          send_welcome_email: false,
-          utm_source: source ?? "lisnin-site",
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), email, timestamp: new Date().toISOString() }),
       });
     }
 
     // Send confirmation email
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL ?? "Lisnin <onboarding@resend.dev>",
       to: email,
@@ -38,7 +32,7 @@ export async function POST(req: Request) {
       html: `
         <div style="font-family: sans-serif; max-width: 560px; margin: 0 auto; background: #0B1120; color: #F9FAFB; padding: 40px 32px; border-radius: 12px;">
           <img src="https://lisnin.io/lisnin-logo.png" alt="Lisnin" height="32" style="margin-bottom: 32px;" />
-          <h1 style="font-size: 1.75rem; font-weight: 700; color: #F9FAFB; margin: 0 0 8px;">You're on the list.</h1>
+          <h1 style="font-size: 1.75rem; font-weight: 700; color: #F9FAFB; margin: 0 0 8px;">Hey ${name.trim()}, you're on the list.</h1>
           <p style="color: #9CA3AF; line-height: 1.6; margin: 0 0 24px;">
             When Lisnin launches this summer, you'll get your first month free — distribution, the Earkitz press kit, Listening Party Bot access, all included.
           </p>

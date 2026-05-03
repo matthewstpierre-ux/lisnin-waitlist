@@ -6,6 +6,9 @@ import dynamic from "next/dynamic";
 
 const HeadphonesCanvas = dynamic(() => import("./HeadphonesCanvas"), { ssr: false });
 
+// Set to true once you've dropped a .glb at public/models/headphones.glb
+const USE_GLB = false;
+
 export function HeadphonesScene() {
   const prefersReducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
@@ -21,7 +24,7 @@ export function HeadphonesScene() {
       className="absolute inset-0 flex items-center justify-center pointer-events-none"
       style={{ opacity }}
     >
-      <HeadphonesCanvas />
+      <HeadphonesCanvas useGlb={USE_GLB} />
     </motion.div>
   );
 }
