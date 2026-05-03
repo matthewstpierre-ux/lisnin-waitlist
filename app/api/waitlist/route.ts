@@ -16,15 +16,15 @@ export async function POST(req: Request) {
     const trimmedName = name.trim();
     const timestamp = new Date().toISOString();
 
-    // Try Google Sheets
+    // Try Google Sheets via GET (avoids POST redirect body-loss issue)
     const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
     if (sheetsUrl) {
       try {
-        await fetch(sheetsUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: trimmedName, email, timestamp }),
-        });
+        const url = new URL(sheetsUrl);
+        url.searchParams.set("name", trimmedName);
+        url.searchParams.set("email", email);
+        url.searchParams.set("timestamp", timestamp);
+        await fetch(url.toString());
       } catch (sheetsErr) {
         console.error("Sheets error:", sheetsErr);
       }
