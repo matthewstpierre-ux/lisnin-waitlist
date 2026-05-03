@@ -68,7 +68,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Logo */}
           <button onClick={() => scrollTo("hero")} className="flex-shrink-0" aria-label="Go to top">
-            <Image src="/lisnin-logo.png" alt="Lisnin" width={110} height={32} style={{ objectFit: "contain" }} priority />
+            <Image src="/lisnin-logo.png" alt="Lisnin" width={160} height={48} style={{ objectFit: "contain" }} priority />
           </button>
 
           {/* Desktop nav */}
