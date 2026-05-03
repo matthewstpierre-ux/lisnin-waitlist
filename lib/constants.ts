@@ -16,7 +16,7 @@ export const FEATURES = [
     icon: "FileText",
     title: "Publishing Administration",
     description:
-      "US + Canadian PRO enrollment (ASCAP, MLC, SoundExchange, SOCAN, CMRRA, ACTRA RACS). $124.99/year.",
+      "US + Canadian PRO enrollment (ASCAP, MLC, SoundExchange, SOCAN, CMRRA, ACTRA RACS).",
   },
   {
     icon: "Globe",
