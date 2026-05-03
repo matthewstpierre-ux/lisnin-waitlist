@@ -3,7 +3,6 @@ export const SOCIAL_LINKS = {
   twitter: "#",
   instagram: "#",
   facebook: "#",
-  tiktok: "#",
   careers: "#",
 };
 

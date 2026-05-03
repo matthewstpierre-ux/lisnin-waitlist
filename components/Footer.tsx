@@ -87,7 +87,6 @@ export function Footer({ onOpenWaitlist }: FooterProps) {
           <FooterLink label="Twitter" href={SOCIAL_LINKS.twitter} />
           <FooterLink label="Instagram" href={SOCIAL_LINKS.instagram} />
           <FooterLink label="Facebook" href={SOCIAL_LINKS.facebook} />
-          <FooterLink label="TikTok" href={SOCIAL_LINKS.tiktok} />
         </div>
 
         {/* Company */}
