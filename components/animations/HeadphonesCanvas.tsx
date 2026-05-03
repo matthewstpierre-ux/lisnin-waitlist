@@ -43,7 +43,7 @@ function GLBHeadphones({ mouse }: { mouse: React.MutableRefObject<[number, numbe
   });
 
   return (
-    <group ref={groupRef} scale={[0.55, 0.55, 0.55]}>
+    <group ref={groupRef} scale={[0.32, 0.32, 0.32]}>
       <primitive object={scene} />
     </group>
   );
