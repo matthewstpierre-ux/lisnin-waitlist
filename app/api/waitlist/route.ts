@@ -18,6 +18,7 @@ export async function POST(req: Request) {
 
     // Try Google Sheets via GET
     const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    console.log("ENV KEYS:", Object.keys(process.env).filter(k => k.includes("SHEET") || k.includes("GOOGLE") || k.includes("RESEND")));
     console.log("SHEETS_URL present:", !!sheetsUrl, sheetsUrl?.slice(0, 60));
     if (sheetsUrl) {
       try {
