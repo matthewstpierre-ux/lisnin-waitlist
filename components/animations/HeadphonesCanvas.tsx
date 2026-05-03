@@ -13,20 +13,20 @@ function GLBHeadphones({ mouse }: { mouse: React.MutableRefObject<[number, numbe
   const groupRef = useRef<THREE.Group>(null!);
   const timeRef = useRef(0);
 
-  // Apply green emissive tint to all meshes
+  // Override materials: dark body with green emissive accent
   useEffect(() => {
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
-        if (Array.isArray(mesh.material)) {
-          mesh.material.forEach((m) => {
-            if (m instanceof THREE.MeshStandardMaterial) {
-              m.envMapIntensity = 1.2;
-            }
-          });
-        } else if (mesh.material instanceof THREE.MeshStandardMaterial) {
-          mesh.material.envMapIntensity = 1.2;
-        }
+        const mat = new THREE.MeshStandardMaterial({
+          color: new THREE.Color("#0e1117"),
+          roughness: 0.25,
+          metalness: 0.9,
+          emissive: new THREE.Color("#22C55E"),
+          emissiveIntensity: 0.08,
+          envMapIntensity: 1.5,
+        });
+        mesh.material = mat;
       }
     });
   }, [scene]);
@@ -43,7 +43,7 @@ function GLBHeadphones({ mouse }: { mouse: React.MutableRefObject<[number, numbe
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} scale={[0.55, 0.55, 0.55]}>
       <primitive object={scene} />
     </group>
   );
@@ -132,10 +132,10 @@ function Scene({
 }) {
   return (
     <>
-      <ambientLight intensity={0.3} />
-      <pointLight position={[-4, 4, 3]} intensity={2.5} color="#22C55E" />
-      <pointLight position={[4, 3, 3]} intensity={1.2} color="#ffffff" />
-      <pointLight position={[0, -3, 4]} intensity={0.4} color="#0B1120" />
+      <ambientLight intensity={0.15} />
+      <pointLight position={[-3, 3, 3]} intensity={4} color="#22C55E" />
+      <pointLight position={[3, 2, 3]} intensity={1.5} color="#22C55E" />
+      <pointLight position={[0, -2, 3]} intensity={0.8} color="#ffffff" />
       <Environment preset="night" />
       {useGlb ? (
         <Suspense fallback={<PrimitiveHeadphones mouse={mouse} />}>
@@ -166,7 +166,7 @@ export default function HeadphonesCanvas({ useGlb = false }: { useGlb?: boolean 
     <div style={{ width: "min(50vh, 520px)", height: "min(50vh, 520px)" }}>
       <Canvas
         dpr={[1, 1.5]}
-        camera={{ position: [0, 0.3, 4.8], fov: 42 }}
+        camera={{ position: [0, 0.3, 6.5], fov: 38 }}
         style={{ background: "transparent" }}
       >
         <Scene mouse={mouse} useGlb={useGlb} />
