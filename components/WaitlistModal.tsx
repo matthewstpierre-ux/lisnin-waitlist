@@ -100,7 +100,7 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             <motion.div
               initial={{ opacity: 0, y: 24, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.97 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
               style={{
@@ -136,12 +136,20 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                 <X size={20} />
               </button>
 
+              <AnimatePresence mode="wait">
               {status === "success" ? (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1.5rem 0", gap: "1rem" }}>
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1.5rem 0", gap: "1rem" }}
+                >
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    initial={{ scale: 0.85, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring", duration: 0.45, bounce: 0.1, delay: 0.1 }}
                   >
                     <CheckCircle2 size={56} color="#22C55E" />
                   </motion.div>
@@ -151,9 +159,15 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   <p style={{ color: "#9ca3af", margin: 0, lineHeight: 1.6 }}>
                     Check your inbox — your first month is on us at launch.
                   </p>
-                </div>
+                </motion.div>
               ) : (
-                <>
+                <motion.div
+                  key="form"
+                  initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                >
                   <div style={{ marginBottom: "1.5rem" }}>
                     <Image src="/lisnin-logo.png" alt="Lisnin" width={100} height={28} style={{ objectFit: "contain" }} />
                   </div>
@@ -219,8 +233,9 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   <p style={{ marginTop: "1rem", fontSize: "0.75rem", textAlign: "center", color: "#4b5563" }}>
                     We&apos;ll never share your info. Launch updates only.
                   </p>
-                </>
+                </motion.div>
               )}
+              </AnimatePresence>
             </motion.div>
           </div>
         </>

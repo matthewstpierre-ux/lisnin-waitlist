@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { PrimaryButton } from "./PrimaryButton";
 import { ease } from "@/lib/motion";
@@ -86,18 +86,40 @@ export function ContactSection() {
             viewport={{ once: true, margin: "-15%" }}
             transition={{ duration: 0.7, ease }}
           >
+            <AnimatePresence mode="wait">
             {status === "success" ? (
-              <div className="flex flex-col items-center text-center gap-5 py-12">
-                <CheckCircle2 size={52} color="var(--brand-green)" />
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 8, filter: "blur(4px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="flex flex-col items-center text-center gap-5 py-12"
+              >
+                <motion.div
+                  initial={{ scale: 0.85, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", duration: 0.45, bounce: 0.1, delay: 0.1 }}
+                >
+                  <CheckCircle2 size={52} color="var(--brand-green)" />
+                </motion.div>
                 <h3 className="text-xl font-bold" style={{ fontFamily: "var(--font-epilogue)", color: "var(--text-primary)" }}>
                   Message received.
                 </h3>
                 <p style={{ color: "var(--text-secondary)" }}>
                   We&apos;ll be in touch within 48 hours.
                 </p>
-              </div>
+              </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <motion.form
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, y: -8, filter: "blur(4px)" }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-4"
+              >
                 {/* Honeypot */}
                 <input type="text" name="website" value={form.website} onChange={e => update("website", e.target.value)} style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
@@ -174,8 +196,9 @@ export function ContactSection() {
                 <PrimaryButton type="submit" fullWidth disabled={status === "loading"}>
                   {status === "loading" ? "Sending..." : "Send Message"}
                 </PrimaryButton>
-              </form>
+              </motion.form>
             )}
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
