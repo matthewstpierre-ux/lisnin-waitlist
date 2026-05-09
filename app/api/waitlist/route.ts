@@ -39,7 +39,7 @@ export async function POST(req: Request) {
         // Notify you of new signup
         resend.emails.send({
           from,
-          to: "matthew.stpierre@wracketmusic.com",
+          to: "hello@lisnin.io",
           subject: `New Lisnin signup: ${trimmedName}`,
           html: `<p><strong>Name:</strong> ${trimmedName}<br/><strong>Email:</strong> ${email}<br/><strong>Time:</strong> ${timestamp}</p>`,
         }),

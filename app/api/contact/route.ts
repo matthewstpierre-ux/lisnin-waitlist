@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const destination = process.env.CONTACT_DESTINATION_EMAIL ?? "matthew.stpierre@wracketmusic.com";
+  const destination = process.env.CONTACT_DESTINATION_EMAIL ?? "hello@lisnin.io";
 
   try {
     await resend.emails.send({
