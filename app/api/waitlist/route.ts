@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     // Email notification to you + confirmation to user
     if (process.env.RESEND_API_KEY) {
       const resend = new Resend(process.env.RESEND_API_KEY);
-      const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <onboarding@resend.dev>";
+      const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>";
 
       await Promise.allSettled([
         // Notify you of new signup

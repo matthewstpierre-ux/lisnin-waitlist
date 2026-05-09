@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
   try {
     await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL ?? "Lisnin Contact <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>",
       to: destination,
       replyTo: email,
       subject: `[Lisnin Site Contact] ${inquiry} — ${name}`,
