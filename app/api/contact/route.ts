@@ -44,7 +44,7 @@ export async function POST(req: Request) {
         subject: "Thanks for reaching out — Lisnin",
         html: `
           <div style="font-family: sans-serif; max-width: 560px; background: #0d1a12; color: #e8f5e0; padding: 40px 32px; border-radius: 8px;">
-            <img src="https://lisnin.io/lisnin-logo.png" alt="Lisnin" style="height: 36px; margin-bottom: 32px;" />
+            <img src="https://lisnin.io/lisnin-logo-dark.png" alt="Lisnin" style="height: 36px; margin-bottom: 32px;" />
             <h2 style="margin: 0 0 16px; color: #4ade80; font-size: 22px;">Hey ${name},</h2>
             <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #c8e6c9;">
               Thanks for getting in touch with us at Lisnin. We'll get back to you as soon as we can — typically within 48 hours.
