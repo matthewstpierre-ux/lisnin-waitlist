@@ -57,6 +57,14 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
       if (!res.ok) throw new Error("Failed to join");
       setStatus("success");
 
+      // Meta Pixel — Lead event fires on confirmed signup, not on click
+      if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
+        (window as any).fbq("track", "Lead", {
+          content_name: "Beta Waitlist",
+          content_category: "Signup",
+        });
+      }
+
       const { default: confetti } = await import("canvas-confetti");
       confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ["#22C55E", "#F9FAFB", "#1A7A4A"] });
     } catch {
