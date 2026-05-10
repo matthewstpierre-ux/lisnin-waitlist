@@ -9,7 +9,7 @@ import { ease } from "@/lib/motion";
 const INQUIRY_OPTIONS = ["Feature Request", "Partnerships", "Support", "Other"];
 const TYPE_OPTIONS = ["Artist", "Brand", "Label"];
 
-export function ContactSection() {
+export function ContactSection({ onOpenPrivacy }: { onOpenPrivacy?: () => void }) {
   const [form, setForm] = useState({ name: "", email: "", inquiry: "", type: "", message: "", website: "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -196,6 +196,14 @@ export function ContactSection() {
                 <PrimaryButton type="submit" fullWidth disabled={status === "loading"}>
                   {status === "loading" ? "Sending..." : "Send Message"}
                 </PrimaryButton>
+
+                <p style={{ marginTop: "0.75rem", fontSize: "0.75rem", textAlign: "center", color: "#4b5563" }}>
+                  By submitting, you agree to our{" "}
+                  <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "#22C55E", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                    Privacy Policy
+                  </button>
+                  .
+                </p>
               </motion.form>
             )}
             </AnimatePresence>

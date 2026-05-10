@@ -8,9 +8,10 @@ import Image from "next/image";
 interface WaitlistModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenPrivacy: () => void;
 }
 
-export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
+export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -239,7 +240,11 @@ export function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                   </form>
 
                   <p style={{ marginTop: "1rem", fontSize: "0.75rem", textAlign: "center", color: "#4b5563" }}>
-                    We&apos;ll never share your info. Launch updates only.
+                    By joining, you agree to our{" "}
+                    <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "#22C55E", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                      Privacy Policy
+                    </button>
+                    .
                   </p>
                 </motion.div>
               )}

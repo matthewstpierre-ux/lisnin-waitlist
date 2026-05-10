@@ -13,10 +13,12 @@ import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { WaitlistModal } from "@/components/WaitlistModal";
 import { VideoModal } from "@/components/VideoModal";
+import { PrivacyModal } from "@/components/PrivacyModal";
 
 export default function Home() {
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [videoOpen, setVideoOpen] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
 
   return (
     <MotionConfig transition={{ ease: [0.22, 1, 0.36, 1] }}>
@@ -34,13 +36,14 @@ export default function Home() {
         <HowItWorksSection />
         <ReadySection onOpenWaitlist={() => setWaitlistOpen(true)} />
         <FAQSection />
-        <ContactSection />
+        <ContactSection onOpenPrivacy={() => setPrivacyOpen(true)} />
       </main>
 
-      <Footer onOpenWaitlist={() => setWaitlistOpen(true)} />
+      <Footer onOpenWaitlist={() => setWaitlistOpen(true)} onOpenPrivacy={() => setPrivacyOpen(true)} />
 
-      <WaitlistModal isOpen={waitlistOpen} onClose={() => setWaitlistOpen(false)} />
+      <WaitlistModal isOpen={waitlistOpen} onClose={() => setWaitlistOpen(false)} onOpenPrivacy={() => setPrivacyOpen(true)} />
       <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} />
+      <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
     </MotionConfig>
   );
 }

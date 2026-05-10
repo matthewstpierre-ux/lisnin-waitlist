@@ -47,9 +47,10 @@ function FooterLink({ label, onClick, href }: { label: string; onClick?: () => v
 
 interface FooterProps {
   onOpenWaitlist: () => void;
+  onOpenPrivacy: () => void;
 }
 
-export function Footer({ onOpenWaitlist }: FooterProps) {
+export function Footer({ onOpenWaitlist, onOpenPrivacy }: FooterProps) {
   return (
     <footer
       className="relative w-full pt-20 pb-12 px-6"
@@ -97,6 +98,7 @@ export function Footer({ onOpenWaitlist }: FooterProps) {
           <FooterLink label="Contact Us" onClick={() => scrollTo("contact")} />
           <FooterLink label="Careers" href={SOCIAL_LINKS.careers} />
           <FooterLink label="Feature Request" onClick={() => scrollTo("contact")} />
+          <FooterLink label="Privacy Policy" onClick={onOpenPrivacy} />
         </div>
       </div>
     </footer>
