@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { createHash } from "crypto";
 
 const PIXEL_ID = "1371115361742056";
 
-async function sha256(value: string): Promise<string> {
-  const data = new TextEncoder().encode(value.toLowerCase().trim());
-  const buf = await crypto.subtle.digest("SHA-256", data);
-  return Array.from(new Uint8Array(buf))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+function sha256(value: string): string {
+  return createHash("sha256").update(value.toLowerCase().trim()).digest("hex");
 }
 
 export async function POST(req: Request) {
@@ -25,8 +22,6 @@ export async function POST(req: Request) {
 
     const trimmedName = name.trim();
     const timestamp = new Date().toISOString();
-
-    // Unique event ID — shared with browser fbq call for deduplication
     const eventId = `lisnin-lead-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
     // Google Sheets
@@ -43,39 +38,43 @@ export async function POST(req: Request) {
       }
     }
 
-    // Meta Conversions API — server-side, bypasses ad blockers
+    // Meta Conversions API
     const capiToken = process.env.META_PIXEL_ACCESS_TOKEN;
+    console.log("CAPI token present:", !!capiToken);
+
     if (capiToken) {
       try {
-        const hashedEmail = await sha256(email);
-        const hashedFirstName = await sha256(trimmedName.split(" ")[0]);
-
-        await fetch(`https://graph.facebook.com/v19.0/${PIXEL_ID}/events`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            data: [
-              {
-                event_name: "Lead",
-                event_time: Math.floor(Date.now() / 1000),
-                event_id: eventId,
-                action_source: "website",
-                event_source_url: "https://lisnin.io",
-                user_data: {
-                  em: [hashedEmail],
-                  fn: [hashedFirstName],
+        const capiRes = await fetch(
+          `https://graph.facebook.com/v19.0/${PIXEL_ID}/events`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              data: [
+                {
+                  event_name: "Lead",
+                  event_time: Math.floor(Date.now() / 1000),
+                  event_id: eventId,
+                  action_source: "website",
+                  event_source_url: "https://lisnin.io",
+                  user_data: {
+                    em: [sha256(email)],
+                    fn: [sha256(trimmedName.split(" ")[0])],
+                  },
+                  custom_data: {
+                    content_name: "Beta Waitlist",
+                    content_category: "Signup",
+                  },
                 },
-                custom_data: {
-                  content_name: "Beta Waitlist",
-                  content_category: "Signup",
-                },
-              },
-            ],
-            access_token: capiToken,
-          }),
-        });
+              ],
+              access_token: capiToken,
+            }),
+          }
+        );
+        const capiBody = await capiRes.json();
+        console.log("CAPI response:", JSON.stringify(capiBody));
       } catch (capiErr) {
-        console.error("CAPI error:", capiErr);
+        console.error("CAPI fetch error:", capiErr);
       }
     }
 
