@@ -11,7 +11,12 @@ function sha256(value: string): string {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email } = body;
+    const { name, email, fbp, fbc } = body;
+
+    // Client context for CAPI EMQ — not hashed
+    const clientIp =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "";
+    const clientUserAgent = req.headers.get("user-agent") ?? "";
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -21,6 +26,9 @@ export async function POST(req: Request) {
     }
 
     const trimmedName = name.trim();
+    const nameParts = trimmedName.split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ");
     const timestamp = new Date().toISOString();
     const eventId = `lisnin-lead-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -54,7 +62,13 @@ export async function POST(req: Request) {
               event_source_url: "https://lisnin.io",
               user_data: {
                 em: [sha256(email)],
-                fn: [sha256(trimmedName.split(" ")[0])],
+                fn: [sha256(firstName)],
+                ...(lastName ? { ln: [sha256(lastName)] } : {}),
+                external_id: [sha256(email)],
+                client_ip_address: clientIp,
+                client_user_agent: clientUserAgent,
+                ...(fbp ? { fbp } : {}),
+                ...(fbc ? { fbc } : {}),
               },
               custom_data: {
                 content_name: "Beta Waitlist",

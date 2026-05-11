@@ -50,10 +50,20 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
     setStatus("loading");
     setErrorMsg("");
     try {
+      // Read Meta cookies and fbclid for CAPI Event Match Quality
+      const getCookie = (n: string) => {
+        const m = document.cookie.match(new RegExp("(^| )" + n + "=([^;]+)"));
+        return m ? decodeURIComponent(m[2]) : undefined;
+      };
+      const fbp = getCookie("_fbp");
+      const fbcCookie = getCookie("_fbc");
+      const fbclid = new URLSearchParams(window.location.search).get("fbclid");
+      const fbc = fbcCookie ?? (fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined);
+
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ name, email, fbp, fbc }),
       });
       if (!res.ok) throw new Error("Failed to join");
       const data = await res.json();
