@@ -56,14 +56,17 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
         body: JSON.stringify({ name, email }),
       });
       if (!res.ok) throw new Error("Failed to join");
+      const data = await res.json();
       setStatus("success");
 
-      // Meta Pixel — Lead event fires on confirmed signup, not on click
+      // Browser-side pixel — eventID deduplicates against the server CAPI call
       if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-        (window as any).fbq("track", "Lead", {
-          content_name: "Beta Waitlist",
-          content_category: "Signup",
-        });
+        (window as any).fbq(
+          "track",
+          "Lead",
+          { content_name: "Beta Waitlist", content_category: "Signup" },
+          { eventID: data.eventId }
+        );
       }
 
       const { default: confetti } = await import("canvas-confetti");

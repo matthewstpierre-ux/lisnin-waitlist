@@ -1,6 +1,16 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+const PIXEL_ID = "1371115361742056";
+
+async function sha256(value: string): Promise<string> {
+  const data = new TextEncoder().encode(value.toLowerCase().trim());
+  const buf = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -16,7 +26,10 @@ export async function POST(req: Request) {
     const trimmedName = name.trim();
     const timestamp = new Date().toISOString();
 
-    // Try Google Sheets via GET
+    // Unique event ID — shared with browser fbq call for deduplication
+    const eventId = `lisnin-lead-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+
+    // Google Sheets
     const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
     if (sheetsUrl) {
       try {
@@ -30,20 +43,54 @@ export async function POST(req: Request) {
       }
     }
 
-    // Email notification to you + confirmation to user
+    // Meta Conversions API — server-side, bypasses ad blockers
+    const capiToken = process.env.META_PIXEL_ACCESS_TOKEN;
+    if (capiToken) {
+      try {
+        const hashedEmail = await sha256(email);
+        const hashedFirstName = await sha256(trimmedName.split(" ")[0]);
+
+        await fetch(`https://graph.facebook.com/v19.0/${PIXEL_ID}/events`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            data: [
+              {
+                event_name: "Lead",
+                event_time: Math.floor(Date.now() / 1000),
+                event_id: eventId,
+                action_source: "website",
+                event_source_url: "https://lisnin.io",
+                user_data: {
+                  em: [hashedEmail],
+                  fn: [hashedFirstName],
+                },
+                custom_data: {
+                  content_name: "Beta Waitlist",
+                  content_category: "Signup",
+                },
+              },
+            ],
+            access_token: capiToken,
+          }),
+        });
+      } catch (capiErr) {
+        console.error("CAPI error:", capiErr);
+      }
+    }
+
+    // Resend emails
     if (process.env.RESEND_API_KEY) {
       const resend = new Resend(process.env.RESEND_API_KEY);
       const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>";
 
       await Promise.allSettled([
-        // Notify you of new signup
         resend.emails.send({
           from,
           to: "hello@lisnin.io",
           subject: `New Lisnin signup: ${trimmedName}`,
           html: `<p><strong>Name:</strong> ${trimmedName}<br/><strong>Email:</strong> ${email}<br/><strong>Time:</strong> ${timestamp}</p>`,
         }),
-        // Confirmation to user
         resend.emails.send({
           from,
           to: email,
@@ -67,7 +114,7 @@ export async function POST(req: Request) {
       ]);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, eventId });
   } catch (err) {
     console.error("Waitlist route error:", err);
     return NextResponse.json({ error: "Failed to process" }, { status: 500 });
