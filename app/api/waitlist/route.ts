@@ -44,31 +44,38 @@ export async function POST(req: Request) {
 
     if (capiToken) {
       try {
+        const capiPayload: Record<string, unknown> = {
+          data: [
+            {
+              event_name: "Lead",
+              event_time: Math.floor(Date.now() / 1000),
+              event_id: eventId,
+              action_source: "website",
+              event_source_url: "https://lisnin.io",
+              user_data: {
+                em: [sha256(email)],
+                fn: [sha256(trimmedName.split(" ")[0])],
+              },
+              custom_data: {
+                content_name: "Beta Waitlist",
+                content_category: "Signup",
+              },
+            },
+          ],
+          access_token: capiToken,
+        };
+
+        // Only set during testing — remove META_TEST_EVENT_CODE from Vercel env once verified
+        if (process.env.META_TEST_EVENT_CODE) {
+          capiPayload.test_event_code = process.env.META_TEST_EVENT_CODE;
+        }
+
         const capiRes = await fetch(
           `https://graph.facebook.com/v19.0/${PIXEL_ID}/events`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              data: [
-                {
-                  event_name: "Lead",
-                  event_time: Math.floor(Date.now() / 1000),
-                  event_id: eventId,
-                  action_source: "website",
-                  event_source_url: "https://lisnin.io",
-                  user_data: {
-                    em: [sha256(email)],
-                    fn: [sha256(trimmedName.split(" ")[0])],
-                  },
-                  custom_data: {
-                    content_name: "Beta Waitlist",
-                    content_category: "Signup",
-                  },
-                },
-              ],
-              access_token: capiToken,
-            }),
+            body: JSON.stringify(capiPayload),
           }
         );
         const capiBody = await capiRes.json();
