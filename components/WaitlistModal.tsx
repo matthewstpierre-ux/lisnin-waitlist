@@ -50,34 +50,13 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
     setStatus("loading");
     setErrorMsg("");
     try {
-      // Read Meta cookies and fbclid for CAPI Event Match Quality
-      const getCookie = (n: string) => {
-        const m = document.cookie.match(new RegExp("(^| )" + n + "=([^;]+)"));
-        return m ? decodeURIComponent(m[2]) : undefined;
-      };
-      const fbp = getCookie("_fbp");
-      const fbcCookie = getCookie("_fbc");
-      const fbclid = new URLSearchParams(window.location.search).get("fbclid");
-      const fbc = fbcCookie ?? (fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined);
-
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, fbp, fbc }),
+        body: JSON.stringify({ name, email }),
       });
       if (!res.ok) throw new Error("Failed to join");
-      const data = await res.json();
       setStatus("success");
-
-      // Browser-side pixel — eventID deduplicates against the server CAPI call
-      if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-        (window as any).fbq(
-          "track",
-          "Lead",
-          { content_name: "Beta Waitlist", content_category: "Signup" },
-          { eventID: data.eventId }
-        );
-      }
 
       const { default: confetti } = await import("canvas-confetti");
       confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ["#22C55E", "#F9FAFB", "#1A7A4A"] });
