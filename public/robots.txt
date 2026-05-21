@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /proposals/
-
-Sitemap: https://lisnin.io/sitemap.xml
