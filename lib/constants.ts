@@ -40,7 +40,7 @@ export const FEATURES = [
     icon: "TrendingUp",
     title: "Music Rights Marketplace",
     description:
-      "Invite-only launch 2027. $200K+ raised for artists to-date. Connect with music investors and sell portions of your music rights.",
+      "Invite-only, launch 2027/2028. $200K+ raised for artists to-date. Connect with buyers to sell or license your music.",
   },
 ];
 
@@ -108,7 +108,7 @@ export const FAQS = [
   {
     question: "How does the Music Rights Marketplace work?",
     answer:
-      "Simply put, we connect you with music investors interested in buying small portions of music ownership. We calculate what your music is estimated to earn over its lifetime and give you an approximate rate you could collect for each % of streaming revenue.",
+      "Simply put, we enable you to create listings on our platform to connect with a user base of individuals in the music rights sector interested in purchasing and licensing music. Artist select their terms and music they want to list, we calculate what your music is estimated to earn in future years and give you an approximate rate to set a listing at.",
   },
   {
     question: "Why isn't the Music Rights Marketplace launching until 2027?",
