@@ -701,7 +701,7 @@ const HTML = `<!DOCTYPE html>
       <div class="header-ask">
         <div class="ask-label">Pre-Seed Ask</div>
         <div class="ask-amount">$250K USD</div>
-        <div class="ask-note">SAFE Note · $2.75M Post-Money Cap · September 2026 Launch<br/>matthew@lisnin.io · lisnin.io · CBCA Corp., Milton, ON</div>
+        <div class="ask-note">SAFE Note · $2.75M Post-Money Cap · Fall 2026 Launch<br/>matthew@lisnin.io · lisnin.io · CBCA Corp., Milton, ON</div>
       </div>
     </div>
   </div>
@@ -903,7 +903,7 @@ const HTML = `<!DOCTYPE html>
     </div>
     <div class="cta-right">
       <a href="mailto:matthew@lisnin.io" class="cta-email" style="text-decoration:none;">matthew@lisnin.io</a>
-      <div class="cta-url">lisnin.io · $250K USD · $2.75M Post-Money SAFE Cap · September 2026 launch</div>
+      <div class="cta-url">lisnin.io · $250K USD · $2.75M Post-Money SAFE Cap · Fall 2026 launch</div>
     </div>
   </div>
 
