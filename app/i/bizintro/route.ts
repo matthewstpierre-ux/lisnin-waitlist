@@ -132,6 +132,13 @@ const HTML = `<!DOCTYPE html>
   [data-theme="dark"] .logo-light-img { display: none; }
   [data-theme="dark"] .logo-dark-img  { display: block; }
 
+  /* ── 3D LOGO ────────────────────────────────────── */
+  .logo-3d-wrap { position: relative; width: 200px; height: 34px; }
+  .logo-3d-wrap .logo-static { position: absolute; top: 0; left: 0; transition: opacity 0.3s ease; }
+  .logo-3d-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; }
+  .logo-3d-wrap.logo3d-ready canvas { opacity: 1; }
+  .logo-3d-wrap.logo3d-ready .logo-static { opacity: 0; }
+
   .tagline {
     font-family: 'Epilogue', sans-serif;
     font-style: italic;
@@ -633,6 +640,7 @@ const HTML = `<!DOCTYPE html>
     .header-right { align-items: flex-start; width: 100%; }
     .header-ask { text-align: left; }
     .logo-light-img, .logo-dark-img { height: 28px; }
+    .logo-3d-wrap { width: 165px; height: 28px; }
     .subtag { max-width: none; }
 
     .hero-bar { grid-template-columns: 1fr 1fr; }
@@ -688,8 +696,11 @@ const HTML = `<!DOCTYPE html>
   <!-- HEADER -->
   <div class="header">
     <div class="logo-block">
-      <img src="/lisnin-logo__black.svg" alt="Lisnin" class="logo-light-img" />
-      <img src="/lisnin-logo__white.svg" alt="Lisnin" class="logo-dark-img" />
+      <div class="logo-3d-wrap" id="logo3d-wrap">
+        <img src="/lisnin-logo__black.svg" alt="Lisnin" class="logo-light-img logo-static" />
+        <img src="/lisnin-logo__white.svg" alt="Lisnin" class="logo-dark-img logo-static" />
+        <canvas id="logo3d-canvas"></canvas>
+      </div>
       <div class="tagline">Your Entire Music Career, One Platform</div>
       <div class="subtag">The SaaS wedge into the capital market for independent music.</div>
     </div>
@@ -923,6 +934,84 @@ function toggleTheme() {
   html.setAttribute('data-theme', isDark ? '' : 'dark');
   localStorage.setItem('biz-theme', isDark ? 'light' : 'dark');
 }
+</script>
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.184.0';
+import { GLTFLoader } from 'https://esm.sh/three@0.184.0/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'https://esm.sh/three@0.184.0/examples/jsm/loaders/DRACOLoader.js';
+
+(function () {
+  var canvas = document.getElementById('logo3d-canvas');
+  if (!canvas) return;
+
+  var width = canvas.clientWidth || 200;
+  var height = canvas.clientHeight || 34;
+
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(width, height, false);
+
+  var worldWidth = 4.4;
+  var worldHeight = worldWidth * (height / width);
+  var camera = new THREE.OrthographicCamera(-worldWidth / 2, worldWidth / 2, worldHeight / 2, -worldHeight / 2, 0.1, 100);
+  camera.position.set(0, 0, 10);
+  camera.lookAt(0, 0, 0);
+
+  var scene = new THREE.Scene();
+  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  var pl1 = new THREE.PointLight(0x29a354, 3); pl1.position.set(-2, 1.5, 3); scene.add(pl1);
+  var pl2 = new THREE.PointLight(0x1C6E3D, 1.2); pl2.position.set(2, -1, 3); scene.add(pl2);
+  var pl3 = new THREE.PointLight(0xffffff, 0.6); pl3.position.set(0, 0, 4); scene.add(pl3);
+
+  var draco = new DRACOLoader();
+  draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+  var loader = new GLTFLoader();
+  loader.setDRACOLoader(draco);
+
+  var material = new THREE.MeshStandardMaterial({
+    color: '#000000',
+    metalness: 0.2,
+    roughness: 0.35,
+    emissive: new THREE.Color('#29a354'),
+    emissiveIntensity: 0.7,
+  });
+
+  function applyTheme() {
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    material.color.set(isDark ? '#ffffff' : '#000000');
+    material.emissiveIntensity = isDark ? 0.9 : 0.7;
+  }
+
+  loader.load('/models/lisnin-logo-3d.glb', function (gltf) {
+    var model = gltf.scene;
+    var box = new THREE.Box3().setFromObject(model);
+    var center = box.getCenter(new THREE.Vector3());
+    model.traverse(function (o) { if (o.isMesh) o.material = material; });
+
+    var group = new THREE.Group();
+    model.position.set(-center.x, -center.y, -center.z);
+    group.add(model);
+    scene.add(group);
+    applyTheme();
+
+    var wrap = document.getElementById('logo3d-wrap');
+    if (wrap) wrap.classList.add('logo3d-ready');
+
+    var start = performance.now();
+    function animate() {
+      var t = (performance.now() - start) / 1000;
+      group.rotation.y = Math.sin(t * 0.4) * 0.18;
+      group.rotation.x = Math.sin(t * 0.3) * 0.04;
+      group.position.y = Math.sin(t * 0.6) * 0.015;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  });
+
+  var themeObserver = new MutationObserver(applyTheme);
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+})();
 </script>
 </body>
 </html>`;
