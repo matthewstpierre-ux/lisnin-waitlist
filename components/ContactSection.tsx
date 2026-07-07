@@ -197,9 +197,9 @@ export function ContactSection({ onOpenPrivacy }: { onOpenPrivacy?: () => void }
                   {status === "loading" ? "Sending..." : "Send Message"}
                 </PrimaryButton>
 
-                <p style={{ marginTop: "0.75rem", fontSize: "0.75rem", textAlign: "center", color: "#4b5563" }}>
+                <p style={{ marginTop: "0.75rem", fontSize: "0.75rem", textAlign: "center", color: "var(--text-muted)" }}>
                   By submitting, you agree to our{" "}
-                  <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "#22C55E", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                  <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--brand-green)", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                     Privacy Policy
                   </button>
                   .

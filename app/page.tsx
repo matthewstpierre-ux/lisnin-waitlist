@@ -42,7 +42,7 @@ export default function Home() {
       <Footer onOpenWaitlist={() => setWaitlistOpen(true)} onOpenPrivacy={() => setPrivacyOpen(true)} />
 
       <WaitlistModal isOpen={waitlistOpen} onClose={() => setWaitlistOpen(false)} onOpenPrivacy={() => setPrivacyOpen(true)} />
-      <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} />
+      <VideoModal isOpen={videoOpen} onClose={() => setVideoOpen(false)} onOpenWaitlist={() => { setVideoOpen(false); setWaitlistOpen(true); }} />
       <PrivacyModal isOpen={privacyOpen} onClose={() => setPrivacyOpen(false)} />
     </MotionConfig>
   );

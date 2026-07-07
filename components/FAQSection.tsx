@@ -22,7 +22,7 @@ function FAQItem({ question, answer, index }: { question: string; answer: string
         onClick={() => setOpen(v => !v)}
         className="w-full flex items-center justify-between py-5 text-left gap-4 transition-colors"
         style={{ background: "none", border: "none", cursor: "pointer" }}
-        onMouseEnter={e => (e.currentTarget.style.background = "rgba(17,24,39,0.4)")}
+        onMouseEnter={e => (e.currentTarget.style.background = "var(--overlay-subtle)")}
         onMouseLeave={e => (e.currentTarget.style.background = "none")}
       >
         <span

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2 } from "lucide-react";
-import Image from "next/image";
+import { Logo } from "./Logo";
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -59,7 +59,7 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
       setStatus("success");
 
       const { default: confetti } = await import("canvas-confetti");
-      confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ["#22C55E", "#F9FAFB", "#1A7A4A"] });
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ["#1C6E3D", "#F5F5F0", "#29a354"] });
     } catch {
       setStatus("error");
       setErrorMsg("Something went wrong. Please try again.");
@@ -70,9 +70,9 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
     width: "100%",
     padding: "0.75rem 1rem",
     borderRadius: "0.75rem",
-    background: "#0d1117",
-    border: "1px solid rgba(255,255,255,0.1)",
-    color: "#f0ede8",
+    background: "var(--bg-subtle)",
+    border: "1px solid var(--border-default)",
+    color: "var(--text-primary)",
     fontSize: "0.875rem",
     outline: "none",
     fontFamily: "inherit",
@@ -110,9 +110,9 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                 maxWidth: "480px",
                 borderRadius: "1rem",
                 padding: "2rem",
-                background: "#111827",
-                border: "1px solid rgba(34,197,94,0.25)",
-                boxShadow: "0 0 0 1px rgba(34,197,94,0.05), 0 24px 64px rgba(0,0,0,0.6)",
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border-default)",
+                boxShadow: "0 0 0 1px var(--brand-green-glow), 0 24px 64px rgba(0,0,0,0.35)",
               }}
             >
               {/* Close button */}
@@ -125,14 +125,14 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                   background: "none",
                   border: "none",
                   cursor: "pointer",
-                  color: "#6b7280",
+                  color: "var(--text-muted)",
                   padding: "0.25rem",
                   display: "flex",
                   borderRadius: "0.5rem",
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#f0ede8")}
-                onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}
+                onMouseEnter={e => (e.currentTarget.style.color = "var(--text-primary)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}
               >
                 <X size={20} />
               </button>
@@ -152,12 +152,12 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: "spring", duration: 0.45, bounce: 0.1, delay: 0.1 }}
                   >
-                    <CheckCircle2 size={56} color="#22C55E" />
+                    <CheckCircle2 size={56} color="var(--brand-green)" />
                   </motion.div>
-                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.5rem", fontWeight: 700, color: "#f0ede8", margin: 0 }}>
+                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>
                     You&apos;re on the list!
                   </h2>
-                  <p style={{ color: "#9ca3af", margin: 0, lineHeight: 1.6 }}>
+                  <p style={{ color: "var(--text-secondary)", margin: 0, lineHeight: 1.6 }}>
                     Check your inbox — your first month is on us at launch.
                   </p>
                 </motion.div>
@@ -170,13 +170,13 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                   transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <div style={{ marginBottom: "1.5rem" }}>
-                    <Image src="/lisnin-logo.png" alt="Lisnin" width={100} height={28} style={{ objectFit: "contain" }} />
+                    <Logo width={100} height={28} />
                   </div>
 
-                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.5rem", fontWeight: 700, color: "#f0ede8", margin: "0 0 0.5rem" }}>
+                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)", margin: "0 0 0.5rem" }}>
                     Get on the list.
                   </h2>
-                  <p style={{ color: "#9ca3af", fontSize: "0.875rem", lineHeight: 1.6, margin: "0 0 1.5rem" }}>
+                  <p style={{ color: "var(--text-secondary)", fontSize: "0.875rem", lineHeight: 1.6, margin: "0 0 1.5rem" }}>
                     Be first to know when Lisnin launches — and claim your free month.
                   </p>
 
@@ -188,8 +188,8 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                       placeholder="Your name"
                       required
                       style={inputStyle}
-                      onFocus={e => (e.currentTarget.style.borderColor = "#22C55E")}
-                      onBlur={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--brand-green)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border-default)")}
                     />
                     <input
                       type="email"
@@ -198,8 +198,8 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                       placeholder="your@email.com"
                       required
                       style={inputStyle}
-                      onFocus={e => (e.currentTarget.style.borderColor = "#22C55E")}
-                      onBlur={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
+                      onFocus={e => (e.currentTarget.style.borderColor = "var(--brand-green)")}
+                      onBlur={e => (e.currentTarget.style.borderColor = "var(--border-default)")}
                     />
 
                     {status === "error" && (
@@ -215,8 +215,8 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                         width: "100%",
                         padding: "0.875rem",
                         borderRadius: "0.75rem",
-                        background: status === "loading" ? "#1a7a4a" : "#22C55E",
-                        color: "#0a0a0a",
+                        background: "var(--brand-green-fill)",
+                        color: "var(--text-on-brand)",
                         border: "none",
                         fontSize: "0.9rem",
                         fontWeight: 600,
@@ -231,9 +231,9 @@ export function WaitlistModal({ isOpen, onClose, onOpenPrivacy }: WaitlistModalP
                     </motion.button>
                   </form>
 
-                  <p style={{ marginTop: "1rem", fontSize: "0.75rem", textAlign: "center", color: "#4b5563" }}>
+                  <p style={{ marginTop: "1rem", fontSize: "0.75rem", textAlign: "center", color: "var(--text-muted)" }}>
                     By joining, you agree to our{" "}
-                    <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "#22C55E", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+                    <button onClick={onOpenPrivacy} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--brand-green)", fontSize: "0.75rem", textDecoration: "underline", textUnderlineOffset: "3px" }}>
                       Privacy Policy
                     </button>
                     .

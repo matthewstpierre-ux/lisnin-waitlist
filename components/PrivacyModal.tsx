@@ -12,10 +12,10 @@ interface PrivacyModalProps {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: "2rem" }}>
-      <h3 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1rem", fontWeight: 700, color: "#22C55E", marginBottom: "0.75rem" }}>
+      <h3 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1rem", fontWeight: 700, color: "var(--brand-green)", marginBottom: "0.75rem" }}>
         {title}
       </h3>
-      <div style={{ color: "#9ca3af", fontSize: "0.875rem", lineHeight: 1.75 }}>
+      <div style={{ color: "var(--text-secondary)", fontSize: "0.875rem", lineHeight: 1.75 }}>
         {children}
       </div>
     </div>
@@ -37,7 +37,7 @@ function Ul({ items }: { items: React.ReactNode[] }) {
 function A({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer"
-      style={{ color: "#22C55E", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+      style={{ color: "var(--brand-green)", textDecoration: "underline", textUnderlineOffset: "3px" }}>
       {children}
     </a>
   );
@@ -83,9 +83,9 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                 maxWidth: "680px",
                 maxHeight: "85vh",
                 borderRadius: "1rem",
-                background: "#0d1117",
-                border: "1px solid rgba(34,197,94,0.2)",
-                boxShadow: "0 0 0 1px rgba(34,197,94,0.05), 0 24px 64px rgba(0,0,0,0.7)",
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border-default)",
+                boxShadow: "0 0 0 1px var(--brand-green-glow), 0 24px 64px rgba(0,0,0,0.7)",
                 display: "flex",
                 flexDirection: "column",
               }}
@@ -93,25 +93,25 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               {/* Header */}
               <div style={{
                 padding: "1.5rem 2rem",
-                borderBottom: "1px solid rgba(34,197,94,0.12)",
+                borderBottom: "1px solid var(--border-subtle)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
                 flexShrink: 0,
               }}>
                 <div>
-                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.25rem", fontWeight: 700, color: "#f0ede8", margin: 0 }}>
+                  <h2 style={{ fontFamily: "var(--font-epilogue)", fontSize: "1.25rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>
                     Privacy Policy
                   </h2>
-                  <p style={{ color: "#4b5563", fontSize: "0.75rem", margin: "0.25rem 0 0", fontFamily: "var(--font-outfit)" }}>
+                  <p style={{ color: "var(--text-muted)", fontSize: "0.75rem", margin: "0.25rem 0 0", fontFamily: "var(--font-outfit)" }}>
                     Effective May 11, 2026 · Last updated May 10, 2026
                   </p>
                 </div>
                 <button
                   onClick={handleClose}
-                  style={{ background: "none", border: "none", cursor: "pointer", color: "#6b7280", padding: "0.25rem", borderRadius: "0.5rem", display: "flex", transition: "color 0.15s" }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "#f0ede8")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "#6b7280")}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-muted)", padding: "0.25rem", borderRadius: "0.5rem", display: "flex", transition: "color 0.15s" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "var(--text-primary)")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}
                 >
                   <X size={20} />
                 </button>
@@ -126,18 +126,18 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                 </Section>
 
                 <Section title="2. Who We Are">
-                  <P>Lisnin is operated by <strong style={{ color: "#e5e7eb" }}>Lisnin Music Inc</strong>, based in <strong style={{ color: "#e5e7eb" }}>Milton, Ontario, Canada</strong>. We are an all-in-one career platform for independent artists.</P>
+                  <P>Lisnin is operated by <strong style={{ color: "var(--text-primary)" }}>Lisnin Music Inc</strong>, based in <strong style={{ color: "var(--text-primary)" }}>Milton, Ontario, Canada</strong>. We are an all-in-one career platform for independent artists.</P>
                   <P>For privacy-related questions: <A href="mailto:hello@lisnin.io">hello@lisnin.io</A> · 949 Sprague Pl, Milton, ON, L9T 0K6</P>
                 </Section>
 
                 <Section title="3. Information We Collect">
-                  <P><strong style={{ color: "#e5e7eb" }}>Information you provide directly:</strong></P>
+                  <P><strong style={{ color: "var(--text-primary)" }}>Information you provide directly:</strong></P>
                   <Ul items={[
                     "Beta Waitlist Signups: your name and email address.",
                     "Contact Forms: your name, email address, and message contents.",
                     "Other Voluntary Submissions: social media handles, artist profile details, or feedback.",
                   ]} />
-                  <P><strong style={{ color: "#e5e7eb" }}>Information collected automatically:</strong></P>
+                  <P><strong style={{ color: "var(--text-primary)" }}>Information collected automatically:</strong></P>
                   <Ul items={[
                     "IP address and approximate location (city/region level)",
                     "Browser type and version",
@@ -151,15 +151,15 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                 <Section title="4. Cookies and Tracking Technologies">
                   <P>We use cookies and similar technologies to operate our website and deliver relevant advertising:</P>
                   <Ul items={[
-                    <><strong style={{ color: "#e5e7eb" }}>Essential cookies:</strong> Required for the website to function properly.</>,
-                    <><strong style={{ color: "#e5e7eb" }}>Analytics cookies:</strong> Help us understand how visitors interact with our site.</>,
-                    <><strong style={{ color: "#e5e7eb" }}>Advertising and marketing cookies:</strong> Used to deliver relevant ads and measure campaign effectiveness.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Essential cookies:</strong> Required for the website to function properly.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Analytics cookies:</strong> Help us understand how visitors interact with our site.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Advertising and marketing cookies:</strong> Used to deliver relevant ads and measure campaign effectiveness.</>,
                   ]} />
                   <P>You can disable cookies through your browser settings, though some features may not work properly if you do.</P>
                 </Section>
 
                 <Section title="5. Meta Pixel and Third-Party Advertising">
-                  <P>Our website uses the <strong style={{ color: "#e5e7eb" }}>Meta Pixel</strong>, a tracking tool provided by Meta Platforms, Inc. It collects pages visited, actions taken (such as joining the beta waitlist), hashed email/name data, and browser/device/session information.</P>
+                  <P>Our website uses the <strong style={{ color: "var(--text-primary)" }}>Meta Pixel</strong>, a tracking tool provided by Meta Platforms, Inc. It collects pages visited, actions taken (such as joining the beta waitlist), hashed email/name data, and browser/device/session information.</P>
                   <P>This is used to show relevant advertising on Facebook and Instagram, measure ad performance, and build custom and lookalike audiences.</P>
                   <P>Meta processes this data per its own <A href="https://www.facebook.com/privacy/policy">Privacy Policy</A>. You can manage preferences via <A href="https://www.facebook.com/adpreferences">Meta ad settings</A> or the <A href="https://youradchoices.ca/">Digital Advertising Alliance of Canada</A>.</P>
                 </Section>
@@ -178,17 +178,17 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
                 </Section>
 
                 <Section title="7. Email Communications and Consent">
-                  <P>By submitting your email through our beta waitlist, contact form, or any other form on lisnin.io, you <strong style={{ color: "#e5e7eb" }}>expressly consent</strong> to receive communications from Lisnin, including beta launch announcements, newsletters, marketing content, and responses to your inquiries.</P>
+                  <P>By submitting your email through our beta waitlist, contact form, or any other form on lisnin.io, you <strong style={{ color: "var(--text-primary)" }}>expressly consent</strong> to receive communications from Lisnin, including beta launch announcements, newsletters, marketing content, and responses to your inquiries.</P>
                   <P>We comply with Canada&apos;s Anti-Spam Legislation (CASL). Every commercial email includes a clear unsubscribe link. You may withdraw consent at any time by clicking that link or emailing <A href="mailto:hello@lisnin.io">hello@lisnin.io</A>.</P>
                 </Section>
 
                 <Section title="8. How We Share Your Information">
-                  <P><strong style={{ color: "#e5e7eb" }}>We do not sell your personal information.</strong> We may share it in limited circumstances:</P>
+                  <P><strong style={{ color: "var(--text-primary)" }}>We do not sell your personal information.</strong> We may share it in limited circumstances:</P>
                   <Ul items={[
-                    <><strong style={{ color: "#e5e7eb" }}>Service Providers:</strong> Trusted third parties performing services on our behalf (email delivery, hosting, analytics).</>,
-                    <><strong style={{ color: "#e5e7eb" }}>Advertising Partners:</strong> Meta (Facebook/Instagram) for advertising purposes as described in Section 5.</>,
-                    <><strong style={{ color: "#e5e7eb" }}>Legal Requirements:</strong> When required by law or court order.</>,
-                    <><strong style={{ color: "#e5e7eb" }}>Business Transfers:</strong> In connection with a merger, acquisition, or sale of our business.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Service Providers:</strong> Trusted third parties performing services on our behalf (email delivery, hosting, analytics).</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Advertising Partners:</strong> Meta (Facebook/Instagram) for advertising purposes as described in Section 5.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Legal Requirements:</strong> When required by law or court order.</>,
+                    <><strong style={{ color: "var(--text-primary)" }}>Business Transfers:</strong> In connection with a merger, acquisition, or sale of our business.</>,
                   ]} />
                 </Section>
 
@@ -225,8 +225,8 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               </div>
 
               {/* Footer */}
-              <div style={{ padding: "1rem 2rem", borderTop: "1px solid rgba(34,197,94,0.12)", flexShrink: 0 }}>
-                <p style={{ margin: 0, fontSize: "0.75rem", color: "#4b5563", fontFamily: "var(--font-outfit)", textAlign: "center" }}>
+              <div style={{ padding: "1rem 2rem", borderTop: "1px solid var(--border-subtle)", flexShrink: 0 }}>
+                <p style={{ margin: 0, fontSize: "0.75rem", color: "var(--text-muted)", fontFamily: "var(--font-outfit)", textAlign: "center" }}>
                   This Privacy Policy is effective as of May 11, 2026 and applies to all visitors and users of lisnin.io.
                 </p>
               </div>

@@ -3,14 +3,15 @@
 import { useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import Image from "next/image";
+import { Logo } from "./Logo";
 
 interface VideoModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenWaitlist: () => void;
 }
 
-export function VideoModal({ isOpen, onClose }: VideoModalProps) {
+export function VideoModal({ isOpen, onClose, onOpenWaitlist }: VideoModalProps) {
   const handleClose = useCallback(() => onClose(), [onClose]);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export function VideoModal({ isOpen, onClose }: VideoModalProps) {
         <>
           <motion.div
             className="fixed inset-0 z-50"
-            style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(6px)" }}
+            style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -52,7 +53,7 @@ export function VideoModal({ isOpen, onClose }: VideoModalProps) {
               style={{
                 maxWidth: 960,
                 background: "var(--bg-elevated)",
-                border: "1px solid rgba(34,197,94,0.2)",
+                border: "1px solid var(--border-default)",
               }}
             >
               <button
@@ -70,7 +71,7 @@ export function VideoModal({ isOpen, onClose }: VideoModalProps) {
                 className="flex flex-col items-center justify-center gap-6 py-20 px-8"
                 style={{ aspectRatio: "16/9", maxHeight: 540 }}
               >
-                <Image src="/lisnin-logo.png" alt="Lisnin" width={140} height={40} style={{ objectFit: "contain" }} />
+                <Logo width={140} height={40} />
                 <p
                   className="text-lg font-semibold text-center"
                   style={{ fontFamily: "var(--font-epilogue)", color: "var(--text-secondary)" }}
@@ -85,8 +86,29 @@ export function VideoModal({ isOpen, onClose }: VideoModalProps) {
                     fontFamily: "var(--font-outfit)",
                   }}
                 >
-                  Available May 19
+                  Available August 1st, 2026
                 </p>
+                <motion.button
+                  onClick={() => { onClose(); onOpenWaitlist(); }}
+                  whileHover={{ y: -2, boxShadow: "0 8px 32px var(--brand-green-glow)" }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  style={{
+                    padding: "0.75rem 1.75rem",
+                    fontSize: "0.9rem",
+                    fontFamily: "var(--font-outfit)",
+                    fontWeight: 600,
+                    background: "var(--brand-green-fill)",
+                    color: "var(--text-on-brand)",
+                    border: "none",
+                    borderRadius: "0.75rem",
+                    cursor: "pointer",
+                    letterSpacing: "0.01em",
+                    position: "relative",
+                  }}
+                >
+                  Join Waitlist
+                </motion.button>
               </div>
             </motion.div>
           </motion.div>

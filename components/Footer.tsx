@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { SOCIAL_LINKS } from "@/lib/constants";
+import { Logo } from "./Logo";
 
 function scrollTo(id: string) {
   const el = document.getElementById(id);
@@ -59,7 +59,7 @@ export function Footer({ onOpenWaitlist, onOpenPrivacy }: FooterProps) {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         {/* Brand col */}
         <div className="md:col-span-1 flex flex-col gap-4">
-          <Image src="/lisnin-logo.png" alt="Lisnin" width={190} height={56} style={{ objectFit: "contain", objectPosition: "left" }} />
+          <Logo width={190} height={56} style={{ objectPosition: "left" }} />
           <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)", fontFamily: "var(--font-outfit)" }}>
             Your entire music career, one platform. Manage your releases, publishing, royalties, distribution, marketing and community.
           </p>

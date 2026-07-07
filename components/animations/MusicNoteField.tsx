@@ -20,6 +20,12 @@ function seeded(seed: number) {
   return x - Math.floor(x);
 }
 
+// Fixed precision avoids server/client float rounding mismatches (hydration errors)
+function round(n: number, decimals: number) {
+  const f = 10 ** decimals;
+  return Math.round(n * f) / f;
+}
+
 export function MusicNoteField({ count = 16 }: { count?: number }) {
   const prefersReducedMotion = useReducedMotion();
   const { scrollY } = useScroll();
@@ -29,11 +35,11 @@ export function MusicNoteField({ count = 16 }: { count?: number }) {
     Array.from({ length: count }, (_, i) => ({
       id: i,
       symbol: NOTES[Math.floor(seeded(i * 3) * NOTES.length)],
-      topPercent: 2 + seeded(i * 7) * 96,   // spread across full page height %
-      size: 18 + seeded(i * 11) * 38,        // 18–56px
-      opacity: 0.12 + seeded(i * 13) * 0.18, // 0.12–0.30 — actually visible
-      duration: 16 + seeded(i * 17) * 18,    // 16–34s
-      delay: -(seeded(i * 19) * 28),         // stagger start times
+      topPercent: round(2 + seeded(i * 7) * 96, 2),   // spread across full page height %
+      size: round(18 + seeded(i * 11) * 38, 1),        // 18–56px
+      opacity: round(0.12 + seeded(i * 13) * 0.18, 3), // 0.12–0.30 — actually visible
+      duration: round(16 + seeded(i * 17) * 18, 2),    // 16–34s
+      delay: round(-(seeded(i * 19) * 28), 2),         // stagger start times
     })),
     [count]
   );
@@ -50,9 +56,9 @@ export function MusicNoteField({ count = 16 }: { count?: number }) {
             className="absolute select-none"
             style={{
               top: `${n.topPercent}%`,
-              left: `${seeded(n.id * 23) * 85}%`,
+              left: `${round(seeded(n.id * 23) * 85, 2)}%`,
               fontSize: n.size,
-              opacity: n.opacity * 0.4,
+              opacity: round(n.opacity * 0.4, 3),
               color: "var(--brand-green)",
             }}
           >

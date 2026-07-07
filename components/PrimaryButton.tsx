@@ -35,8 +35,8 @@ export function PrimaryButton({
         fontSize,
         fontFamily: "var(--font-outfit)",
         fontWeight: 600,
-        background: disabled ? "#1A7A4A" : "var(--brand-green)",
-        color: "var(--bg-base)",
+        background: "var(--brand-green-fill)",
+        color: "var(--text-on-brand)",
         border: "none",
         borderRadius: "0.75rem",
         cursor: disabled ? "not-allowed" : "pointer",
@@ -53,7 +53,7 @@ export function PrimaryButton({
       {/* Pulse glow ring at rest */}
       <motion.span
         className="absolute inset-0 rounded-xl pointer-events-none"
-        style={{ border: "2px solid var(--brand-green)" }}
+        style={{ border: "2px solid var(--brand-green-fill)" }}
         animate={{ opacity: [0.15, 0.4, 0.15], scale: [1, 1.04, 1] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />

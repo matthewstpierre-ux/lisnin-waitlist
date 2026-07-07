@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { PrimaryButton } from "./PrimaryButton";
+import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./Logo";
 
 const NAV_LINKS = [
   { label: "Demo", id: "demo" },
@@ -60,7 +61,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
       <header
         className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
         style={{
-          background: scrolled ? "rgba(11,17,32,0.85)" : "transparent",
+          background: scrolled ? "var(--nav-bg)" : "transparent",
           backdropFilter: scrolled ? "blur(16px)" : "none",
           borderBottom: scrolled ? "1px solid var(--border-subtle)" : "none",
         }}
@@ -68,7 +69,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Logo */}
           <button onClick={() => scrollTo("hero")} className="flex-shrink-0" aria-label="Go to top">
-            <Image src="/lisnin-logo.png" alt="Lisnin" width={160} height={48} style={{ objectFit: "contain" }} priority />
+            <Logo width={160} height={48} priority />
           </button>
 
           {/* Desktop nav */}
@@ -86,7 +87,8 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle />
             <PrimaryButton onClick={onOpenWaitlist}>Join Beta</PrimaryButton>
           </div>
 
@@ -113,7 +115,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-30 flex flex-col pt-24 px-8 pb-12"
-            style={{ background: "rgba(11,17,32,0.97)", backdropFilter: "blur(16px)" }}
+            style={{ background: "var(--nav-bg)", backdropFilter: "blur(16px)" }}
           >
             <nav className="flex flex-col gap-6 flex-1">
               {NAV_LINKS.map((link, i) => (
@@ -130,6 +132,9 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
                 </motion.button>
               ))}
             </nav>
+            <div className="flex items-center justify-between gap-4 mb-6">
+              <ThemeToggle />
+            </div>
             <PrimaryButton onClick={() => { setMenuOpen(false); onOpenWaitlist(); }} size="lg" fullWidth>
               Join Beta
             </PrimaryButton>
