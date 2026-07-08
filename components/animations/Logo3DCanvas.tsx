@@ -7,9 +7,6 @@ import * as THREE from "three";
 
 useGLTF.setDecoderPath("https://www.gstatic.com/draco/versioned/decoders/1.5.6/");
 
-const GREEN = "#1C6E3D";
-const GREEN_BRIGHT = "#29a354";
-
 function useIsDarkTheme() {
   const [isDark, setIsDark] = useState(false);
 
@@ -40,10 +37,8 @@ function LogoMesh() {
   useEffect(() => {
     const material = new THREE.MeshStandardMaterial({
       color: isDark ? "#ffffff" : "#000000",
-      metalness: 0.2,
-      roughness: 0.35,
-      emissive: new THREE.Color(GREEN_BRIGHT),
-      emissiveIntensity: isDark ? 0.9 : 0.7,
+      metalness: 0.15,
+      roughness: 0.4,
     });
     scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
@@ -81,7 +76,14 @@ function FitCamera({ width }: { width: number }) {
 
 export default function Logo3DCanvas({ pixelWidth, pixelHeight }: { pixelWidth: number; pixelHeight: number }) {
   return (
-    <div style={{ width: pixelWidth, height: pixelHeight }}>
+    <div
+      style={{
+        width: pixelWidth,
+        height: pixelHeight,
+        filter:
+          "drop-shadow(0 0 3px rgba(41,163,84,0.55)) drop-shadow(0 0 7px rgba(41,163,84,0.3))",
+      }}
+    >
       <Canvas
         orthographic
         dpr={[1, 2]}
@@ -89,10 +91,9 @@ export default function Logo3DCanvas({ pixelWidth, pixelHeight }: { pixelWidth: 
         style={{ background: "transparent" }}
         gl={{ alpha: true }}
       >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[-2, 1.5, 3]} intensity={3} color={GREEN_BRIGHT} />
-        <pointLight position={[2, -1, 3]} intensity={1.2} color={GREEN} />
-        <pointLight position={[0, 0, 4]} intensity={0.6} color="#ffffff" />
+        <ambientLight intensity={0.9} />
+        <pointLight position={[-2, 1.5, 3]} intensity={0.5} color="#ffffff" />
+        <pointLight position={[0, 0, 4]} intensity={0.9} color="#ffffff" />
         <FitCamera width={4.4} />
         <Suspense fallback={null}>
           <LogoMesh />

@@ -135,7 +135,7 @@ const HTML = `<!DOCTYPE html>
   /* ── 3D LOGO ────────────────────────────────────── */
   .logo-3d-wrap { position: relative; width: 200px; height: 34px; }
   .logo-3d-wrap .logo-static { position: absolute; top: 0; left: 0; transition: opacity 0.3s ease; }
-  .logo-3d-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; }
+  .logo-3d-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; filter: drop-shadow(0 0 3px rgba(41,163,84,0.55)) drop-shadow(0 0 7px rgba(41,163,84,0.3)); }
   .logo-3d-wrap.logo3d-ready canvas { opacity: 1; }
   .logo-3d-wrap.logo3d-ready .logo-static { opacity: 0; }
 
@@ -958,10 +958,9 @@ import { DRACOLoader } from 'https://esm.sh/three@0.184.0/examples/jsm/loaders/D
   camera.lookAt(0, 0, 0);
 
   var scene = new THREE.Scene();
-  scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  var pl1 = new THREE.PointLight(0x29a354, 3); pl1.position.set(-2, 1.5, 3); scene.add(pl1);
-  var pl2 = new THREE.PointLight(0x1C6E3D, 1.2); pl2.position.set(2, -1, 3); scene.add(pl2);
-  var pl3 = new THREE.PointLight(0xffffff, 0.6); pl3.position.set(0, 0, 4); scene.add(pl3);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+  var pl1 = new THREE.PointLight(0xffffff, 0.5); pl1.position.set(-2, 1.5, 3); scene.add(pl1);
+  var pl3 = new THREE.PointLight(0xffffff, 0.9); pl3.position.set(0, 0, 4); scene.add(pl3);
 
   var draco = new DRACOLoader();
   draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
@@ -970,16 +969,13 @@ import { DRACOLoader } from 'https://esm.sh/three@0.184.0/examples/jsm/loaders/D
 
   var material = new THREE.MeshStandardMaterial({
     color: '#000000',
-    metalness: 0.2,
-    roughness: 0.35,
-    emissive: new THREE.Color('#29a354'),
-    emissiveIntensity: 0.7,
+    metalness: 0.15,
+    roughness: 0.4,
   });
 
   function applyTheme() {
     var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     material.color.set(isDark ? '#ffffff' : '#000000');
-    material.emissiveIntensity = isDark ? 0.9 : 0.7;
   }
 
   loader.load('/models/lisnin-logo-3d.glb', function (gltf) {
