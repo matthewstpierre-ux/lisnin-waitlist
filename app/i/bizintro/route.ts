@@ -127,15 +127,15 @@ const HTML = `<!DOCTYPE html>
   }
 
   .logo-block { display: flex; flex-direction: column; gap: 6px; }
-  .logo-light-img { display: block; height: 34px; width: auto; }
-  .logo-dark-img  { display: none;  height: 34px; width: auto; }
+  .logo-light-img { display: block; height: 58px; width: auto; }
+  .logo-dark-img  { display: none;  height: 58px; width: auto; }
   [data-theme="dark"] .logo-light-img { display: none; }
   [data-theme="dark"] .logo-dark-img  { display: block; }
 
   /* ── 3D LOGO ────────────────────────────────────── */
-  .logo-3d-wrap { position: relative; width: 200px; height: 34px; }
+  .logo-3d-wrap { position: relative; width: 340px; height: 58px; }
   .logo-3d-wrap .logo-static { position: absolute; top: 0; left: 0; transition: opacity 0.3s ease; }
-  .logo-3d-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; }
+  .logo-3d-wrap canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.4s ease; filter: drop-shadow(0 0 3px rgba(41,163,84,0.55)) drop-shadow(0 0 7px rgba(41,163,84,0.3)); }
   .logo-3d-wrap.logo3d-ready canvas { opacity: 1; }
   .logo-3d-wrap.logo3d-ready .logo-static { opacity: 0; }
 
@@ -639,8 +639,8 @@ const HTML = `<!DOCTYPE html>
     .header { flex-direction: column; gap: 16px; }
     .header-right { align-items: flex-start; width: 100%; }
     .header-ask { text-align: left; }
-    .logo-light-img, .logo-dark-img { height: 28px; }
-    .logo-3d-wrap { width: 165px; height: 28px; }
+    .logo-light-img, .logo-dark-img { height: 48px; }
+    .logo-3d-wrap { width: 281px; height: 48px; }
     .subtag { max-width: none; }
 
     .hero-bar { grid-template-columns: 1fr 1fr; }

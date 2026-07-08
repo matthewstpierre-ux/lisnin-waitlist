@@ -76,7 +76,14 @@ function FitCamera({ width }: { width: number }) {
 
 export default function Logo3DCanvas({ pixelWidth, pixelHeight }: { pixelWidth: number; pixelHeight: number }) {
   return (
-    <div style={{ width: pixelWidth, height: pixelHeight }}>
+    <div
+      style={{
+        width: pixelWidth,
+        height: pixelHeight,
+        filter:
+          "drop-shadow(0 0 3px rgba(41,163,84,0.55)) drop-shadow(0 0 7px rgba(41,163,84,0.3))",
+      }}
+    >
       <Canvas
         orthographic
         dpr={[1, 2]}
