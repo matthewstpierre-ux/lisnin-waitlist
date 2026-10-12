@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { isMailConfigured, sendMail } from "@/lib/mailer";
 import { SAULT_EVENT } from "@/lib/events";
 import { buildIcsEvent, buildGoogleCalendarLink } from "@/lib/ics";
 
@@ -50,8 +50,8 @@ export async function POST(req: Request) {
     if (!process.env.GOOGLE_SHEETS_WEBHOOK_URL) {
       throw new Error("GOOGLE_SHEETS_WEBHOOK_URL is not set");
     }
-    if (!process.env.RESEND_API_KEY) {
-      throw new Error("RESEND_API_KEY is not set");
+    if (!isMailConfigured()) {
+      throw new Error("Outbound email is not configured");
     }
 
     // Google Sheets — Sault Event tab
@@ -89,11 +89,7 @@ export async function POST(req: Request) {
       end: new Date(SAULT_EVENT.endIso),
     });
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>";
-
-    await resend.emails.send({
-      from,
+    await sendMail({
       to: trimmed.email,
       subject: "You're on the list — Lisnin @ Sault Ste. Marie, Aug 25",
       html: `

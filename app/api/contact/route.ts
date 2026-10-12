@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { sendMail } from "@/lib/mailer";
 
 export async function POST(req: Request) {
   const { name, email, inquiry, type, message, website } = await req.json();
@@ -11,16 +11,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Missing fields" }, { status: 400 });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
   const destination = process.env.CONTACT_DESTINATION_EMAIL ?? "hello@lisnin.io";
-
-  const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>";
 
   try {
     await Promise.all([
       // Internal notification to the Lisnin team
-      resend.emails.send({
-        from,
+      sendMail({
         to: destination,
         replyTo: email,
         subject: `[Lisnin Site Contact] ${inquiry} — ${name}`,
@@ -38,8 +34,7 @@ export async function POST(req: Request) {
       }),
 
       // Auto-reply confirmation to the sender
-      resend.emails.send({
-        from,
+      sendMail({
         to: email,
         subject: "Thanks for reaching out — Lisnin",
         html: `

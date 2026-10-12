@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { isMailConfigured, sendMail } from "@/lib/mailer";
 
 export async function POST(req: Request) {
   try {
@@ -30,20 +30,15 @@ export async function POST(req: Request) {
       }
     }
 
-    // Resend emails
-    if (process.env.RESEND_API_KEY) {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      const from = process.env.RESEND_FROM_EMAIL ?? "Lisnin <hello@lisnin.io>";
-
+    // Outbound email
+    if (isMailConfigured()) {
       await Promise.allSettled([
-        resend.emails.send({
-          from,
+        sendMail({
           to: "hello@lisnin.io",
           subject: `New Lisnin signup: ${trimmedName}`,
           html: `<p><strong>Name:</strong> ${trimmedName}<br/><strong>Email:</strong> ${email}<br/><strong>Time:</strong> ${timestamp}</p>`,
         }),
-        resend.emails.send({
-          from,
+        sendMail({
           to: email,
           subject: "You're on the list — your first month is on us at launch.",
           html: `
