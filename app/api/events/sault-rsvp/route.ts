@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isMailConfigured, sendMail } from "@/lib/mailer";
+import { isLeadStoreConfigured, saveLead } from "@/lib/leads";
 import { SAULT_EVENT } from "@/lib/events";
 import { buildIcsEvent, buildGoogleCalendarLink } from "@/lib/ics";
 
@@ -47,29 +48,25 @@ export async function POST(req: Request) {
 
     const timestamp = new Date().toISOString();
 
-    if (!process.env.GOOGLE_SHEETS_WEBHOOK_URL) {
-      throw new Error("GOOGLE_SHEETS_WEBHOOK_URL is not set");
+    if (!isLeadStoreConfigured()) {
+      throw new Error("Lead store is not configured");
     }
     if (!isMailConfigured()) {
       throw new Error("Outbound email is not configured");
     }
 
-    // Google Sheets — Sault Event tab
-    const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-    const url = new URL(sheetsUrl);
-    url.searchParams.set("type", "sault-event");
-    url.searchParams.set("firstName", trimmed.firstName);
-    url.searchParams.set("lastName", trimmed.lastName);
-    url.searchParams.set("email", trimmed.email);
-    url.searchParams.set("role", trimmed.role);
-    url.searchParams.set("other", trimmed.other);
-    url.searchParams.set("phone", trimmed.phone);
-    url.searchParams.set("timestamp", timestamp);
-
-    const sheetsRes = await fetch(url.toString(), { redirect: "follow" });
-    if (!sheetsRes.ok) {
-      throw new Error(`Sheets webhook failed: ${sheetsRes.status}`);
-    }
+    // Lead capture — Sault event RSVPs. A lost RSVP fails the request, as
+    // before, so the visitor is told to try again rather than silently dropped.
+    await saveLead("saultrsvp", {
+      type: "sault-event",
+      firstName: trimmed.firstName,
+      lastName: trimmed.lastName,
+      email: trimmed.email,
+      role: trimmed.role,
+      other: trimmed.other,
+      phone: trimmed.phone,
+      timestamp,
+    });
 
     // Build .ics attachment
     const icsContent = buildIcsEvent({

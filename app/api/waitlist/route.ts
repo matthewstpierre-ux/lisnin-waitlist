@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { isMailConfigured, sendMail } from "@/lib/mailer";
+import { isLeadStoreConfigured, saveLead } from "@/lib/leads";
 
 export async function POST(req: Request) {
   try {
@@ -16,17 +17,12 @@ export async function POST(req: Request) {
     const trimmedName = name.trim();
     const timestamp = new Date().toISOString();
 
-    // Google Sheets
-    const sheetsUrl = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-    if (sheetsUrl) {
+    // Lead capture
+    if (isLeadStoreConfigured()) {
       try {
-        const url = new URL(sheetsUrl);
-        url.searchParams.set("name", trimmedName);
-        url.searchParams.set("email", email);
-        url.searchParams.set("timestamp", timestamp);
-        await fetch(url.toString());
-      } catch (sheetsErr) {
-        console.error("Sheets error:", sheetsErr);
+        await saveLead("waitlist", { name: trimmedName, email, timestamp });
+      } catch (storeErr) {
+        console.error("Lead store error:", storeErr);
       }
     }
 
