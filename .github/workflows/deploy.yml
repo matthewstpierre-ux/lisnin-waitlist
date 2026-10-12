@@ -1,0 +1,59 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# OIDC: GitHub mints a short-lived token Azure trusts. No stored credentials.
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      # Built in Azure, not on the runner: no docker layer caching to manage
+      # and the image never travels over the public internet twice.
+      - name: Build image in ACR
+        run: |
+          az acr build \
+            --registry "${{ vars.ACR_NAME }}" \
+            --image "lisnin-web:${{ github.sha }}" \
+            --image "lisnin-web:latest" \
+            .
+
+      - name: Roll out new revision
+        run: |
+          az containerapp update \
+            --name lisnin-web \
+            --resource-group lisnin-web-prod \
+            --image "${{ vars.ACR_NAME }}.azurecr.io/lisnin-web:${{ github.sha }}"
+
+      - name: Smoke test
+        run: |
+          FQDN=$(az containerapp show -n lisnin-web -g lisnin-web-prod \
+                   --query properties.configuration.ingress.fqdn -o tsv)
+          echo "checking https://$FQDN"
+          for i in $(seq 1 10); do
+            CODE=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "https://$FQDN/")
+            echo "  attempt $i: HTTP $CODE"
+            [ "$CODE" = "200" ] && exit 0
+            sleep 15
+          done
+          echo "site did not return 200 after rollout"
+          exit 1
