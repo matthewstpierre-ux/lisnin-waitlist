@@ -1,11 +1,22 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
-export const runtime = "edge";
-export const alt = "Lisnin — Your Entire Music Career, One Platform";
+export const alt = "Lisnin";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+/**
+ * Share card: the wordmark on the brand ground, nothing else. Competitors in
+ * this space all use a bare logo card, and it survives every crop ratio the
+ * social platforms apply.
+ */
+export default async function Image() {
+  const logo = await readFile(
+    path.join(process.cwd(), "public", "lisnin-logo__black.svg")
+  );
+  const logoSrc = `data:image/svg+xml;base64,${logo.toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -13,78 +24,28 @@ export default function Image() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0B1120",
+          background: "#F6F5F2",
           position: "relative",
         }}
       >
-        {/* Green glow */}
+        {/* The same forest-green bloom the site opens with. */}
         <div
           style={{
             position: "absolute",
-            top: -100,
+            top: -220,
             left: "50%",
             transform: "translateX(-50%)",
-            width: 800,
-            height: 500,
+            width: 1100,
+            height: 620,
             borderRadius: "50%",
-            background: "radial-gradient(ellipse, rgba(34,197,94,0.18) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse, rgba(28,110,61,0.13) 0%, rgba(28,110,61,0) 70%)",
           }}
         />
-
-        {/* Logo text */}
-        <div
-          style={{
-            fontSize: 96,
-            fontWeight: 800,
-            color: "#F0EDE8",
-            letterSpacing: "-0.03em",
-            marginBottom: 24,
-          }}
-        >
-          Lisnin
-        </div>
-
-        {/* Tagline */}
-        <div
-          style={{
-            fontSize: 28,
-            color: "#9CA3AF",
-            letterSpacing: "-0.01em",
-            textAlign: "center",
-            maxWidth: 700,
-            marginBottom: 40,
-          }}
-        >
-          Your Entire Music Career, One Platform
-        </div>
-
-        {/* Green pill badge */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            background: "rgba(34,197,94,0.12)",
-            border: "1px solid rgba(34,197,94,0.3)",
-            borderRadius: 100,
-            padding: "10px 24px",
-          }}
-        >
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              background: "#22C55E",
-            }}
-          />
-          <span style={{ color: "#22C55E", fontSize: 18, fontWeight: 600 }}>
-            Join the Beta — First month free at launch
-          </span>
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoSrc} alt="Lisnin" width={760} height={111} />
       </div>
     ),
     { ...size }

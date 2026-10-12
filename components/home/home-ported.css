@@ -1,0 +1,64 @@
+/* ───────────────────────────────────────────────────────────────────────
+   .bizx — sections lifted from /i/bizintro onto the marketing homepage.
+   bizintro.css supplies the component styles; this file only re-tunes the
+   things that differ between an investor one-pager and a consumer page:
+   it sits on the site background, breathes more, and drops the hairline
+   dividers that stitched the one-pager together.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.bizx { background: transparent; }
+
+/* The one-pager is deliberately compressed. The homepage is not. */
+.bizx section { padding: clamp(56px, 7vw, 104px) 0; }
+.bizx section + section { border-top: none; }
+.bizx .page { max-width: 1120px; }
+
+/* Consumer-facing type runs a touch larger than the investor set. */
+.bizx .t-h2 { font-size: clamp(1.75rem, 3.4vw, 2.6rem); }
+.bizx .t-lead { font-size: clamp(1rem, 1.5vw, 1.12rem); }
+
+/* ── HERO ──────────────────────────────────────────────────────────────
+   The site hero is full-height with the music-note field behind it, so the
+   stage needs room to drift without colliding with the CTA.             */
+.bizx .hero { padding: 0; }
+.bizx .hero .t-display { font-size: clamp(2.4rem, 6vw + .5rem, 4.75rem); }
+/* The hero column is a centring flex container, which would otherwise shrink
+   the stage to zero width — every fragment inside it is absolutely positioned. */
+.bizx .stage { width: 100%; margin: clamp(30px, 3.6vw, 48px) 0 clamp(26px, 3.2vw, 40px); }
+
+.bizx .hero-cta { margin-top: 26px; flex-direction: column; align-items: center; gap: 11px; }
+.bizx .hero-note { font-size: .875rem; font-style: italic; color: var(--muted2); }
+
+/* ── DREAM ─────────────────────────────────────────────────────────────
+   On the one-pager this is a full-bleed band. Here it is a contained card
+   so the music notes still read either side of it.                      */
+.bizx .dream { border-radius: 22px; overflow: hidden; margin: 0 auto; max-width: 1120px; }
+.bizx .dream .page { padding: 0 clamp(24px, 4vw, 56px); }
+
+/* ── BETA OFFER ────────────────────────────────────────────────────────
+   Replaces the slot the DSP marquee vacated. No pricing — the offer is
+   the whole argument, so it gets one number and a lot of air.           */
+.bizx .offer {
+  max-width: 720px; margin: 0 auto; text-align: center;
+  padding: clamp(34px, 4.5vw, 54px) clamp(26px, 4vw, 48px);
+  border-radius: 20px; border: 1px solid var(--border); background: var(--grad);
+}
+.bizx .offer-badge {
+  display: inline-block; font-size: .6875rem; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
+  border: 1px solid var(--border); background: var(--glow);
+  border-radius: 100px; padding: 6px 14px; margin-bottom: 18px;
+}
+.bizx .offer-h { font-size: clamp(1.6rem, 3.2vw, 2.4rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; }
+.bizx .offer-h em { font-style: normal; color: var(--accent); }
+.bizx .offer-sub { font-size: clamp(.95rem, 1.4vw, 1.05rem); line-height: 1.6; color: var(--muted); margin: 14px auto 0; max-width: 480px; }
+.bizx .offer-cta { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.bizx .offer-fine { font-size: .8rem; color: var(--muted2); }
+
+/* ── RAILS — five across is right for a one-pager, too tight for a
+   consumer page at mid widths.                                          */
+@media (max-width: 1100px) { .bizx .rails { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px)  { .bizx .rails { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .bizx .rails { grid-template-columns: 1fr; } }
+/* The hub connectors are drawn for the 5-across layout only. */
+@media (max-width: 1100px) { .bizx .conn { display: none; } }

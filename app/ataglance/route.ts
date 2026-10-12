@@ -5,7 +5,7 @@ const HTML = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Lisnin.io — Investor One-Pager</title>
+<title>Lisnin.io — Industry One-Sheet</title>
 
 <!-- Read theme before paint to prevent flash -->
 <script>
@@ -108,10 +108,8 @@ const HTML = `<!DOCTYPE html>
     transition: background 0.2s ease, color 0.2s ease;
     white-space: nowrap;
   }
-  /* light mode: ☀ side is active */
   .t-light { color: var(--green-light); background: var(--green-glow); }
   .t-dark  { color: var(--muted); background: transparent; }
-  /* dark mode: ☽ side is active */
   [data-theme="dark"] .t-light { color: var(--muted); background: transparent; }
   [data-theme="dark"] .t-dark  { color: var(--green-light); background: var(--green-glow); }
 
@@ -151,7 +149,7 @@ const HTML = `<!DOCTYPE html>
     font-size: 11px;
     color: var(--muted2);
     letter-spacing: 0.01em;
-    max-width: 320px;
+    max-width: 340px;
   }
 
   .header-right {
@@ -171,9 +169,9 @@ const HTML = `<!DOCTYPE html>
     margin-bottom: 5px;
   }
   .ask-amount {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 900;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     color: var(--text);
     line-height: 1;
   }
@@ -307,9 +305,22 @@ const HTML = `<!DOCTYPE html>
     color: var(--muted);
   }
 
-  /* ── TWO / THREE COL ────────────────────────────── */
+  /* ── TWO / THREE / FIVE COL ─────────────────────── */
   .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
   .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+  .five-col  { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+
+  /* ── FEATURE CARD ───────────────────────────────── */
+  .feature-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--overlay-subtle);
+    border-radius: 8px;
+    padding: 14px 14px 12px;
+  }
+  .feature-num { color: var(--green-light); font-size: 10px; font-weight: 800; margin-bottom: 6px; }
+  .feature-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 7px; line-height: 1.3; }
+  .feature-body { font-family: 'Epilogue', sans-serif; font-size: 10.5px; color: var(--muted); line-height: 1.5; margin-bottom: 8px; }
+  .feature-price { font-size: 10px; font-weight: 700; color: var(--green-light); letter-spacing: 0.01em; }
 
   /* ── CARD ───────────────────────────────────────── */
   .card {
@@ -360,7 +371,7 @@ const HTML = `<!DOCTYPE html>
     line-height: 1.4;
   }
 
-  /* ── FLYWHEEL ───────────────────────────────────── */
+  /* ── FLYWHEEL / STEP FLOW ────────────────────────── */
   .flywheel-card { margin-bottom: 20px; }
   .fly {
     display: grid;
@@ -389,9 +400,6 @@ const HTML = `<!DOCTYPE html>
     color: var(--muted);
     line-height: 1.5;
   }
-  .fly-arrow {
-    display: none;
-  }
   .fly-quote {
     margin-top: 14px;
     font-family: 'Epilogue', sans-serif;
@@ -409,8 +417,15 @@ const HTML = `<!DOCTYPE html>
     color: var(--muted);
     margin-top: 6px;
   }
+  .fly-note {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 10.5px;
+    color: var(--muted2);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
 
-  /* ── MARKETPLACE PROOF ──────────────────────────── */
+  /* ── CASE ROWS ──────────────────────────────────── */
   .case-row {
     display: flex;
     justify-content: space-between;
@@ -460,34 +475,7 @@ const HTML = `<!DOCTYPE html>
   }
   .info-item strong { color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 600; }
 
-  /* ── MILESTONE ──────────────────────────────────── */
-  .milestone {
-    background: var(--grad-gtm);
-    border: 1px solid var(--green-border);
-    border-radius: 8px;
-    padding: 14px 16px;
-    margin-top: 14px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .milestone-big {
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--green-light);
-    letter-spacing: -0.03em;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .milestone-txt {
-    font-family: 'Epilogue', sans-serif;
-    font-size: 10.5px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-  .milestone-txt strong { color: var(--text); font-family: 'Outfit', sans-serif; font-weight: 700; }
-
-  /* ── FINANCIALS ─────────────────────────────────── */
+  /* ── METRIC ROWS (used for credit system) ───────── */
   .metric-row {
     display: flex;
     justify-content: space-between;
@@ -513,15 +501,24 @@ const HTML = `<!DOCTYPE html>
     line-height: 1.55;
   }
 
-  /* ── PENETRATION NOTE ───────────────────────────── */
-  .pen-note {
+  /* ── PRICING TABLE ──────────────────────────────── */
+  .price-row {
+    display: grid;
+    grid-template-columns: 110px 90px 1fr;
+    gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--divider);
+    align-items: baseline;
+  }
+  .price-row:last-child { border-bottom: none; }
+  .price-plan { font-weight: 700; font-size: 12.5px; color: var(--text); }
+  .price-amt { font-weight: 800; font-size: 12px; color: var(--green-light); }
+  .price-includes {
     font-family: 'Epilogue', sans-serif;
     font-size: 11px;
     color: var(--muted);
-    line-height: 1.6;
-    margin-top: 10px;
+    line-height: 1.5;
   }
-  .pen-note strong { color: var(--green-light); font-family: 'Outfit', sans-serif; font-weight: 700; }
 
   /* ── TEAM ───────────────────────────────────────── */
   .team-card {
@@ -632,6 +629,120 @@ const HTML = `<!DOCTYPE html>
     background: var(--green-glow);
   }
 
+  /* ── BOOK A CALL ────────────────────────────────── */
+  .book-call-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: var(--green-light);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+  .book-call-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .book-call-btn.top { margin-top: 2px; }
+
+  .bc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6,8,7,0.55);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .bc-overlay.open { display: flex; }
+  .bc-modal {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg);
+    border: 1px solid var(--green-border);
+    border-radius: 12px;
+    padding: 28px 26px;
+    position: relative;
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.4);
+  }
+  .bc-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .bc-close:hover { color: var(--text); }
+  .bc-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .bc-sub {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .bc-field { margin-bottom: 14px; }
+  .bc-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .bc-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--green-border);
+    border-radius: 7px;
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+  }
+  .bc-input:focus { outline: none; border-color: var(--green-light); }
+  .bc-submit {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    border: none;
+    border-radius: 7px;
+    background: var(--green-light);
+    color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+  }
+  .bc-submit:hover { filter: brightness(1.08); }
+  .bc-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .bc-msg {
+    font-family: 'Epilogue', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .bc-msg.error { color: #c0392b; margin-top: 10px; font-size: 12px; }
+  .bc-hp { position: absolute; left: -9999px; opacity: 0; }
+
   /* ── MOBILE ─────────────────────────────────────── */
   @media (max-width: 660px) {
     .page { padding: 32px 18px 56px; }
@@ -657,12 +768,14 @@ const HTML = `<!DOCTYPE html>
     .fly { grid-template-columns: 1fr 1fr; }
     .fly-quote { font-size: 11px; }
 
+    .five-col { grid-template-columns: 1fr 1fr; }
+
     .two-col, .three-col { grid-template-columns: 1fr; gap: 12px; }
 
     .case-row { flex-direction: column; align-items: flex-start; gap: 2px; }
     .case-buyers { text-align: left; }
 
-    .milestone { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .price-row { grid-template-columns: 1fr; gap: 2px; }
 
     .metric-row { flex-direction: column; gap: 1px; align-items: flex-start; }
     .metric-value { text-align: left; }
@@ -670,6 +783,8 @@ const HTML = `<!DOCTYPE html>
     .cta { flex-direction: column; gap: 18px; padding: 22px 20px; }
     .cta-right { text-align: left; }
     .cta-headline { font-size: 15px; }
+
+    .bc-modal { padding: 24px 20px; }
   }
 
   /* ── TABLET ──────────────────────────────────────── */
@@ -685,6 +800,7 @@ const HTML = `<!DOCTYPE html>
     .ps-side.problem { border-right: none; border-bottom: 1px solid var(--green-border); }
 
     .fly { grid-template-columns: 1fr 1fr; }
+    .five-col { grid-template-columns: repeat(3, 1fr); }
 
     .three-col { grid-template-columns: 1fr 1fr; }
   }
@@ -702,7 +818,7 @@ const HTML = `<!DOCTYPE html>
         <canvas id="logo3d-canvas"></canvas>
       </div>
       <div class="tagline">Your Entire Music Career, One Platform</div>
-      <div class="subtag">The SaaS wedge into the capital market for independent music.</div>
+      <div class="subtag">The unified music management platform for independent artists — distribution, publishing, promotion &amp; a path to capital.</div>
     </div>
     <div class="header-right">
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light/dark mode">
@@ -710,34 +826,35 @@ const HTML = `<!DOCTYPE html>
         <span class="t-opt t-dark">☽ Dark</span>
       </button>
       <div class="header-ask">
-        <div class="ask-label">Pre-Seed Ask</div>
-        <div class="ask-amount">$250K USD</div>
-        <div class="ask-note">SAFE Note · $2.75M Post-Money Cap · Fall 2026 Launch<br/>matthew@lisnin.io · lisnin.io · CBCA Corp., Milton, ON</div>
+        <div class="ask-label">Industry One-Sheet</div>
+        <div class="ask-amount">Launching Fall 2026</div>
+        <div class="ask-note">Matthew St. Pierre · Co-Founder &amp; CEO<br/>matthew@lisnin.io · Product demo &amp; press assets on request</div>
       </div>
+      <button class="book-call-btn top" onclick="openBookCall()">📅 Book a Call</button>
     </div>
   </div>
 
   <!-- STAT STRIP -->
   <div class="hero-bar">
     <div class="hero-stat">
+      <div class="hs-label">Distribution</div>
+      <div class="hs-value">150+</div>
+      <div class="hs-sub">DSPs via Eveara infrastructure</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Commission</div>
+      <div class="hs-value green">0%</div>
+      <div class="hs-sub">Artists keep 100% of royalties</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hs-label">Entry Price</div>
+      <div class="hs-value">$50/yr</div>
+      <div class="hs-sub">Replaces a $400–500/yr tool stack</div>
+    </div>
+    <div class="hero-stat">
       <div class="hs-label">Community</div>
-      <div class="hs-value">80K+</div>
-      <div class="hs-sub">Owned community · $0-CPA channel</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hs-label">Pre-Product</div>
-      <div class="hs-value green">$200K+</div>
-      <div class="hs-sub">Transacted for artists</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hs-label">Breakeven</div>
-      <div class="hs-value">Month 7–8</div>
-      <div class="hs-sub">~1,140 subscribers</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hs-label">LTV : CAC</div>
-      <div class="hs-value green">5.3–9.4×</div>
-      <div class="hs-sub">Stress-tested at 5–9% churn</div>
+      <div class="hs-value green">80K+</div>
+      <div class="hs-sub">Owned — Lonely Listeners Club</div>
     </div>
   </div>
 
@@ -754,54 +871,115 @@ const HTML = `<!DOCTYPE html>
     </video>
   </div>
 
-  <!-- PROBLEM / SOLUTION -->
-  <div class="section-title">The Opportunity</div>
+  <!-- PROBLEM / PLATFORM -->
+  <div class="section-title">The Problem &amp; The Platform</div>
   <div class="ps-wrap">
     <div class="ps-side problem">
       <div class="ps-eyebrow prob">The Problem</div>
       <div class="ps-head">5–7 disconnected tools. One artist paying for all of them.</div>
-      <div class="ps-body">36% of all music released is now fully independent, yet no single platform serves the complete career stack. Artists spend $400–500/yr on tools that never talk to each other — while $1B+ in publishing royalties goes unclaimed annually and no platform offers a path to fan capital.</div>
+      <div class="ps-body">36% of all music released is now fully independent, yet no single platform serves the complete career stack. Artists spend $400–500/yr on tools that never talk to each other — while $1B+ in publishing royalties goes unclaimed annually and no platform offers a real path to fan capital.</div>
     </div>
     <div class="ps-side solution">
-      <div class="ps-eyebrow sol">The Solution</div>
+      <div class="ps-eyebrow sol">The Platform</div>
       <div class="ps-head">Lisnin replaces the stack with one subscription — from $50/yr.</div>
-      <div class="ps-body">150+ DSP distribution (0% commission, Dolby Atmos standard) · US + CA publishing admin · Earkitz website builder · 4,000+ industry contacts · Listening Party Bot · and a Rights Marketplace (Phase 2) where artists raise capital from fans.</div>
+      <div class="ps-body">150+ DSP distribution (0% commission, Dolby Atmos standard) · US + CA + European publishing admin · Earkitz website builder · 4,000+ industry contacts · Listening Party promotion inside Discord — and a Rights Marketplace (Year 2) where artists raise capital from fans and investors.</div>
     </div>
   </div>
 
-  <!-- FLYWHEEL -->
-  <div class="section-title">The Flywheel</div>
+  <!-- FIVE FEATURES AT LAUNCH -->
+  <div class="section-title">Five Features At Launch</div>
+  <div class="five-col">
+    <div class="feature-card">
+      <div class="feature-num">01</div>
+      <div class="feature-title">Distribution</div>
+      <div class="feature-body">Unlimited releases to 150+ DSPs. MP3, WAV &amp; Dolby Atmos. Automatic royalty splits, pre-save links, auto ISRC/UPC, Stripe payouts.</div>
+      <div class="feature-price">$50/yr · 0% commission</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">02</div>
+      <div class="feature-title">Publishing Admin</div>
+      <div class="feature-body">Registration across NA &amp; Europe — ASCAP, MLC, SoundExchange, SOCAN, CMRRA, ACTRA RACS. You choose what to register; withdraw royalties in-app.</div>
+      <div class="feature-price">$124.99/yr · sync via Wracket</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">03</div>
+      <div class="feature-title">Earkitz</div>
+      <div class="feature-body">Answer a few questions, get a hosted site at earkitz.com/yourname — press kits, booking kits, touring/ticketing or a full brand website.</div>
+      <div class="feature-price">Included · proven at $250/kit</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">04</div>
+      <div class="feature-title">Contact Directory</div>
+      <div class="feature-body">Submit to playlists, blogs &amp; radio with monthly credits. Sends from your own email; bounced sends auto-refund. Genre-tagged, curated.</div>
+      <div class="feature-price">Credits: 10 / 50 / 125 per tier</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">05</div>
+      <div class="feature-title">Listening Party</div>
+      <div class="feature-body">Promote to thousands of active listeners inside partner Discord communities — verified plays, leaderboards &amp; monthly raffle prize pool.</div>
+      <div class="feature-price">$0.10/token · 75% to prize pool</div>
+    </div>
+  </div>
+
+  <!-- LISTENING PARTY FLOW -->
+  <div class="section-title">Listening Party — Campaign Flow</div>
   <div class="card flywheel-card">
-    <div class="card-head">Distribution Is The Funnel. The Marketplace Is The Business.</div>
     <div class="fly">
       <div class="fly-step">
-        <div class="fly-head"><span class="fly-num">01</span>DISTRIBUTE</div>
-        <div class="fly-body">Releases go live on 150+ DSPs through the $50/yr wedge.</div>
+        <div class="fly-head"><span class="fly-num">01</span>SELECT</div>
+        <div class="fly-body">Pick partner communities by genre &amp; size</div>
       </div>
       <div class="fly-step">
-        <div class="fly-head"><span class="fly-num">02</span>VERIFY</div>
-        <div class="fly-body">Streaming &amp; royalty data accrues natively on-platform.</div>
+        <div class="fly-head"><span class="fly-num">02</span>ESTIMATE</div>
+        <div class="fly-body">Projected listener reach before you commit</div>
       </div>
       <div class="fly-step">
-        <div class="fly-head"><span class="fly-num">03</span>LIST</div>
-        <div class="fly-body">Verified data underwrites invite-only marketplace listings.</div>
+        <div class="fly-head"><span class="fly-num">03</span>CONFIRM</div>
+        <div class="fly-body">$0.10 per active listener reached</div>
       </div>
       <div class="fly-step">
-        <div class="fly-head"><span class="fly-num">04</span>RAISE</div>
-        <div class="fly-body">Fans buy fractional rights. Artists get capital. Lisnin earns 10% of GMV.</div>
+        <div class="fly-head"><span class="fly-num">04</span>TRACK</div>
+        <div class="fly-body">Live per-community results dashboards</div>
       </div>
     </div>
-    <div class="fly-quote">
-      &ldquo;Artists won&rsquo;t switch distributors to save $10 a year. They&rsquo;ll switch for access to capital.&rdquo;
-      <span class="muted-inline">Eligibility requires distributing on Lisnin; capital-raising artists pull peers off incumbents.</span>
-    </div>
+    <div class="fly-note">First to market — no comparable Discord-native music promotion network exists. Prototype placed Top 10 of 10,000+ at Solana&rsquo;s Grizzlython.</div>
   </div>
 
-  <!-- PROOF / TRACTION -->
-  <div class="section-title">Proof &amp; Traction</div>
+  <!-- CONTACT DIRECTORY CREDITS -->
+  <div class="section-title">Contact Directory — Credit System</div>
+  <div class="card" style="margin-bottom: 20px;">
+    <div class="metric-row"><div class="metric-label">Base plan</div><div class="metric-value">10 credits/mo</div></div>
+    <div class="metric-row"><div class="metric-label">Pub Admin plan</div><div class="metric-value">50 credits/mo</div></div>
+    <div class="metric-row"><div class="metric-label">Full Stack plan</div><div class="metric-value green">125 credits/mo</div></div>
+    <div class="metric-note">Top-ups: $5 = 50 · $8.99 = 100 · $17.99 = 250 · $29.99 = 500 · $49.99 = 1,000 credits. 1 credit = 1 submission · monthly credits reset; purchased credits last 12 months · categories: Playlists, Blogs, College/Public/Commercial Radio.</div>
+  </div>
+
+  <!-- YEAR TWO MARKETPLACE -->
+  <div class="section-title">Year Two — The Music Rights Marketplace (Invite-Only)</div>
+  <div class="card flywheel-card">
+    <div class="card-head">Artists distributing with Lisnin list songs to license or sell rights to music investors — underwritten by 12+ months of verified, on-platform streaming data.</div>
+    <div class="fly">
+      <div class="fly-step">
+        <div class="fly-head"><span class="fly-num">01</span>SELECT SONG</div>
+        <div class="fly-body">Any release distributed through Lisnin</div>
+      </div>
+      <div class="fly-step">
+        <div class="fly-head"><span class="fly-num">02</span>REVENUE FORECAST</div>
+        <div class="fly-body">Verified history projects earnings</div>
+      </div>
+      <div class="fly-step">
+        <div class="fly-head"><span class="fly-num">03</span>SET PRICE</div>
+        <div class="fly-body">License or sell, share, term, floor</div>
+      </div>
+      <div class="fly-step">
+        <div class="fly-head"><span class="fly-num">04</span>LIST FOR SALE</div>
+        <div class="fly-body">Data-backed listings, invite-only buyers</div>
+      </div>
+    </div>
+  </div>
   <div class="two-col">
     <div class="card">
-      <div class="card-eyebrow">Marketplace Proof — Run Manually, Three Times</div>
+      <div class="card-eyebrow">Community Proof — Run Manually, Three Times</div>
       <div class="case-row">
         <div class="case-name">Andy Polk</div>
         <div class="case-buyers">180+ community buyers</div>
@@ -817,69 +995,57 @@ const HTML = `<!DOCTYPE html>
         <div class="case-buyers">30+ community buyers</div>
         <div class="case-amt">$10,000</div>
       </div>
-      <div class="case-total"><b>$200K+ raised across all campaigns</b> — real dollars, real buyers, zero paid acquisition. Royal.io&rsquo;s 2024 exit vacated the category; Lisnin re-enters on Web2/Stripe rails with a proven buyer pool (Month 16).</div>
-    </div>
-    <div class="card">
-      <div class="card-eyebrow">Traction &amp; Validation</div>
-      <div class="info-list">
-        <div class="info-item"><div class="info-dot"></div><strong>Top 10 of 10,000+</strong> — Solana Grizzlython (Listening Party prototype)</div>
-        <div class="info-item"><div class="info-dot"></div><strong>24 Earkitz sites sold pre-platform</strong> at $250 each — $6K revenue before launch</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Partners:</strong> Eveara (150+ DSPs) · Ajna Inc. (13+ engineers) · Wracket ($3.4M sync budgets)</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Former Songtrust VP advising</strong> on publishing ops &amp; competitive strategy (confidential)</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Accepted</strong> — Spring:Build accelerator</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GTM / FINANCIALS -->
-  <div class="section-title">Go-To-Market &amp; Financials</div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-eyebrow">Go-To-Market</div>
-      <div class="info-list">
-        <div class="info-item"><div class="info-dot"></div><strong>Community (LLC):</strong> $0 CPA · 80K warm audience · 40–60 subs/mo</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Paid social &amp; search:</strong> $27 blended CPA · 225–260 subs/mo at full deploy</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Influencer (Yr 2):</strong> $4.20 CAC · 6.4× better efficiency vs. paid</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Ambassadors:</strong> 10% recurring commission on referred subscriptions</div>
-      </div>
-      <div class="milestone">
-        <div class="milestone-big">~$47K</div>
-        <div class="milestone-txt"><strong>Launch Milestone #1:</strong> 236 founding waitlist subscribers × $199 billed at launch against ~$5K spend (9.4×) — conservative CPA math; organic conversion is upside. We publish the result either way.</div>
-      </div>
-    </div>
-    <div class="card green-bg">
-      <div class="card-eyebrow">Financial Highlights (24-Month Model)</div>
-      <div class="metric-row"><div class="metric-label">Blended ARPU</div><div class="metric-value green">$153/yr</div></div>
-      <div class="metric-row"><div class="metric-label">Blended paid CAC</div><div class="metric-value">$27</div></div>
-      <div class="metric-row"><div class="metric-label">LTV:CAC — stress-tested (9% / 7% / 5% churn)</div><div class="metric-value green">5.3× / 6.7× / 9.4×</div></div>
-      <div class="metric-row"><div class="metric-label">Year 1 revenue → exit ARR run-rate</div><div class="metric-value">~$175–195K → ~$350K</div></div>
-      <div class="metric-row"><div class="metric-label">Year 2 ARR + marketplace GMV</div><div class="metric-value green">~$1.0–1.1M + ~$380K</div></div>
-      <div class="metric-row"><div class="metric-label">Year 2 EBITDA</div><div class="metric-value green">+$300–380K</div></div>
-      <div class="metric-row"><div class="metric-label">Breakeven</div><div class="metric-value">Month 7–8 · ~1,140 subs</div></div>
-      <div class="metric-note">Six streams: subscriptions · publishing commissions (12–13% net via partner) · directory add-on · Listening Party (25% token share) · B2B seats · marketplace (10% GMV).</div>
-    </div>
-  </div>
-
-  <!-- MARKET / WHY WE WIN -->
-  <div class="section-title">Market &amp; Why We Win</div>
-  <div class="two-col">
-    <div class="card">
-      <div class="card-eyebrow">Market — Sized Bottom-Up From Artists Who Already Pay</div>
-      <div class="metric-row"><div class="metric-label">People who have uploaded music to Spotify</div><div class="metric-value">13M</div></div>
-      <div class="metric-row"><div class="metric-label">Independent artists in North America</div><div class="metric-value">8.2M</div></div>
-      <div class="metric-row"><div class="metric-label">Artists already paying DistroKid $23–40/yr</div><div class="metric-value">2M+</div></div>
-      <div class="metric-row"><div class="metric-label">Professional &amp; aspiring-pro artists globally (Spotify est.)</div><div class="metric-value">~250K</div></div>
-      <div class="pen-note"><strong>Penetration math:</strong> the entire Year-2 target of 6,000 subscribers is <strong>0.3% of artists already paying for distribution alone</strong> — while Lisnin replaces a $400–500/yr stack from $50/yr. Rights investment adds a $5B+/yr pool growing 12%+.</div>
+      <div class="case-total"><b>$200K+ raised across manual campaigns</b> — real dollars, zero paid acquisition. Royal.io&rsquo;s 2024 exit left the consumer rights market open; Lisnin re-enters on Web2/Stripe rails at Month 16.</div>
     </div>
     <div class="card dark">
-      <div class="card-eyebrow">Why Lisnin Wins</div>
-      <div class="info-list">
-        <div class="info-item"><div class="info-dot"></div><strong>80K pre-built community</strong> — 4 years of trust and $200K+ transacted; can&rsquo;t be replicated with money</div>
-        <div class="info-item"><div class="info-dot"></div><strong>No rival bundles</strong> distribution + pub admin + contacts + website builder + community in one</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Asset-light publishing ops</strong> — registration pipeline via established partner; nets 12–13% now, internalizes to full 15% at scale</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Aligned sync incentive</strong> — registered catalog → DISCO library → Wracket&rsquo;s $3.4M supervisor budgets</div>
-        <div class="info-item"><div class="info-dot"></div><strong>Distribution lock-in</strong> — catalogs live on 150+ DSPs make leaving costly; Winamp (Euronext: ALWIN) validated the model in the EU at 500+ signups/day — the NA seat is open</div>
+      <div class="card-eyebrow">Why It Matters To Artists</div>
+      <div class="fly-quote" style="padding: 0; margin-top: 0; text-align: left;">
+        &ldquo;Artists won&rsquo;t switch distributors to save $10 a year. They&rsquo;ll switch for access to capital.&rdquo;
       </div>
+      <div class="info-list" style="margin-top: 16px;">
+        <div class="info-item"><div class="info-dot"></div><strong>No catalog dilution</strong> — invite-only in Year 2, entirely opt-in for artists who want it</div>
+        <div class="info-item"><div class="info-dot"></div><strong>Verified data, not speculation</strong> — 12+ months of real on-platform streaming history backs every listing</div>
+        <div class="info-item"><div class="info-dot"></div><strong>Built-in buyer pool</strong> — Lisnin&rsquo;s own 80K community already includes active music rights investors</div>
+        <div class="info-item"><div class="info-dot"></div><strong>No extra cost to access</strong> — unlocked simply by distributing through Lisnin, no separate signup or fee</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section-title">Pricing &amp; Subscriptions</div>
+  <div class="card" style="margin-bottom: 20px;">
+    <div class="price-row">
+      <div class="price-plan">Base</div>
+      <div class="price-amt">$50/yr</div>
+      <div class="price-includes">Unlimited distribution · 0% commission · Earkitz builder · release tools · 10 credits/mo</div>
+    </div>
+    <div class="price-row">
+      <div class="price-plan">Pub Admin</div>
+      <div class="price-amt">$124.99/yr+</div>
+      <div class="price-includes">Publishing registration &amp; royalty collection (US/CA/EU) · sync consideration · 50 credits/mo</div>
+    </div>
+    <div class="price-row">
+      <div class="price-plan">Full Stack</div>
+      <div class="price-amt">$199/yr+</div>
+      <div class="price-includes">Full Contact Directory · 125 credits/mo · priority sync pitching — the complete stack</div>
+    </div>
+    <div class="price-row">
+      <div class="price-plan">Add-ons</div>
+      <div class="price-amt">from $5</div>
+      <div class="price-includes">Credit top-ups · Listening Party tokens ($0.10) · Directory standalone $10/mo or $89.99/yr</div>
+    </div>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div class="section-title">The Community — Lonely Listeners Club</div>
+  <div class="card dark" style="margin-bottom: 20px;">
+    <div class="card-lead">Four years of indie coverage &amp; artist spotlights built one of independent music&rsquo;s most trusted tastemaker brands — and Lisnin&rsquo;s owned acquisition channel.</div>
+    <div class="info-list">
+      <div class="info-item"><div class="info-dot"></div><strong>70K TikTok</strong> — discovery content, hundreds of thousands of monthly views</div>
+      <div class="info-item"><div class="info-dot"></div><strong>4K Discord</strong> — the deepest layer, where $200K+ moved to artists</div>
+      <div class="info-item"><div class="info-dot"></div><strong>9K X</strong> — active in the industry conversation</div>
+      <div class="info-item"><div class="info-dot"></div><strong>Inner circle</strong> — the most engaged members are music rights investors: the marketplace&rsquo;s built-in buyer pool</div>
+      <div class="info-item"><div class="info-dot"></div><strong>$0-CPA funnel</strong> — 40–60 organic subscribers/month at launch</div>
     </div>
   </div>
 
@@ -889,19 +1055,19 @@ const HTML = `<!DOCTYPE html>
     <div class="team-card">
       <div class="team-initials">MS</div>
       <div class="team-name">Matthew St. Pierre</div>
-      <div class="team-role">CEO &amp; Co-Founder · 51%<br/>(+3.5% advisor pool held in trust)</div>
+      <div class="team-role">CEO &amp; Co-Founder</div>
       <div class="team-bio">8+ yrs across label founding, artist development, sync biz dev &amp; web3 launches. Built the Lonely Listeners Club to 80K+ over 4 years, facilitating $200K+ raised for artists.</div>
     </div>
     <div class="team-card">
       <div class="team-initials">VS</div>
       <div class="team-name">Vinay Singh</div>
-      <div class="team-role">CTO &amp; Co-Founder · 33%</div>
-      <div class="team-bio">Founder of Ajna Inc. — a 13+ engineer product studio. Deep SaaS architecture; brings a full development team to the cap table, cutting build cost and technical risk from Day 1.</div>
+      <div class="team-role">CTO &amp; Co-Founder</div>
+      <div class="team-bio">Founder of Ajna Inc. — a 13+ engineer product studio. Deep SaaS architecture; brings a full development team to the cap table, cutting build cost and technical risk from day one.</div>
     </div>
     <div class="team-card">
       <div class="team-initials">EL</div>
       <div class="team-name">Everton Lewis Jr.</div>
-      <div class="team-role">Partnerships &amp; Artist Relations · 12.5%</div>
+      <div class="team-role">Partnerships &amp; Artist Relations</div>
       <div class="team-bio">Founder of Wracket Music Supervision ($3.4M+ annual sync budgets); prev. Vice, Apple. Deep licensing and label relationships — priority placement access from launch day.</div>
     </div>
   </div>
@@ -909,22 +1075,57 @@ const HTML = `<!DOCTYPE html>
   <!-- CTA -->
   <div class="cta">
     <div>
-      <div class="cta-headline">Ready to see the full picture?</div>
-      <div class="cta-sub">Full pitch deck, 24-month financial model, product demo &amp; data room on request</div>
+      <div class="cta-headline">Want the full platform walkthrough?</div>
+      <div class="cta-sub">Product demo, press assets &amp; early access details on request</div>
     </div>
     <div class="cta-right">
-      <a href="mailto:matthew@lisnin.io" class="cta-email" style="text-decoration:none;">matthew@lisnin.io</a>
-      <div class="cta-url">lisnin.io · $250K USD · $2.75M Post-Money SAFE Cap · Fall 2026 launch</div>
+      <button class="book-call-btn" onclick="openBookCall()" style="margin-bottom:10px;">📅 Book a Call</button>
+      <div>
+        <a href="mailto:matthew@lisnin.io" class="cta-email" style="text-decoration:none;">matthew@lisnin.io</a>
+      </div>
+      <div class="cta-url">lisnin.io · Launching Fall 2026</div>
     </div>
   </div>
 
   <!-- DOWNLOAD -->
   <div class="download-bar">
-    <a href="/Lisnin_OneSheet_v2.pdf" download="Lisnin One-Sheet.pdf" class="download-btn">
+    <a href="/Lisnin_Industry_OneSheet.pdf" download="Lisnin Industry One-Sheet.pdf" class="download-btn">
       ↓ Download PDF
     </a>
   </div>
 
+</div>
+
+<!-- BOOK A CALL MODAL -->
+<div class="bc-overlay" id="bc-overlay" onclick="if(event.target===this) closeBookCall()">
+  <div class="bc-modal">
+    <button class="bc-close" onclick="closeBookCall()" aria-label="Close">✕</button>
+    <div id="bc-form-wrap">
+      <div class="bc-title">Book a Call</div>
+      <div class="bc-sub">Grab time with Matthew to talk through the platform, partnership, or anything else.</div>
+      <form id="bc-form" onsubmit="submitBookCall(event)">
+        <input type="text" name="website" class="bc-hp" tabindex="-1" autocomplete="off" />
+        <div class="bc-field">
+          <label class="bc-label" for="bc-name">Name</label>
+          <input class="bc-input" type="text" id="bc-name" name="name" required />
+        </div>
+        <div class="bc-field">
+          <label class="bc-label" for="bc-email">Email</label>
+          <input class="bc-input" type="email" id="bc-email" name="email" required />
+        </div>
+        <div class="bc-field">
+          <label class="bc-label" for="bc-time">Preferred Date &amp; Time</label>
+          <input class="bc-input" type="datetime-local" id="bc-time" name="preferredTime" required />
+        </div>
+        <button type="submit" class="bc-submit" id="bc-submit-btn">Request Call</button>
+        <div class="bc-msg error" id="bc-error" style="display:none;"></div>
+      </form>
+    </div>
+    <div id="bc-success" style="display:none;">
+      <div class="bc-title">You're all set 🎉</div>
+      <div class="bc-msg">Thanks for getting in touch! Matthew will reach out to confirm your meeting within 24 hours. Thanks for Lisnin!</div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -933,6 +1134,50 @@ function toggleTheme() {
   var isDark = html.getAttribute('data-theme') === 'dark';
   html.setAttribute('data-theme', isDark ? '' : 'dark');
   localStorage.setItem('biz-theme', isDark ? 'light' : 'dark');
+}
+
+function openBookCall() {
+  document.getElementById('bc-overlay').classList.add('open');
+}
+function closeBookCall() {
+  document.getElementById('bc-overlay').classList.remove('open');
+}
+
+async function submitBookCall(e) {
+  e.preventDefault();
+  var form = document.getElementById('bc-form');
+  var btn = document.getElementById('bc-submit-btn');
+  var errorEl = document.getElementById('bc-error');
+  errorEl.style.display = 'none';
+
+  var data = {
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    preferredTime: form.preferredTime.value,
+    website: form.website.value,
+    source: "Industry One-Sheet",
+    sourcePath: "lisnin.io/ataglance",
+  };
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  try {
+    var res = await fetch('/api/book-call', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error('Request failed');
+
+    document.getElementById('bc-form-wrap').style.display = 'none';
+    document.getElementById('bc-success').style.display = 'block';
+  } catch (err) {
+    errorEl.textContent = "Something went wrong — please email matthew@lisnin.io directly.";
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Request Call';
+  }
 }
 </script>
 <script type="module">

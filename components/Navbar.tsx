@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { PrimaryButton } from "./PrimaryButton";
 import { ThemeToggle } from "./ThemeToggle";
-import { Logo3D } from "./Logo3D";
+import { Logo } from "./Logo";
 
 const NAV_LINKS = [
-  { label: "Demo", id: "demo" },
+  { label: "AI Manager", id: "ai-manager" },
   { label: "Features", id: "features" },
   { label: "How it Works", id: "how-it-works" },
   { label: "FAQ", id: "faq" },
@@ -22,10 +22,9 @@ function scrollTo(id: string) {
 
 interface NavbarProps {
   onOpenWaitlist: () => void;
-  onOpenVideo: () => void;
 }
 
-export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
+export function Navbar({ onOpenWaitlist }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
@@ -37,7 +36,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
   }, []);
 
   useEffect(() => {
-    const ids = ["hero", "features", "how-it-works", "ready", "faq", "contact"];
+    const ids = ["hero", "ai-manager", "features", "how-it-works", "ready", "faq", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -52,7 +51,6 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
 
   function handleNavClick(id: string) {
     setMenuOpen(false);
-    if (id === "demo") { onOpenVideo(); return; }
     scrollTo(id);
   }
 
@@ -69,7 +67,7 @@ export function Navbar({ onOpenWaitlist, onOpenVideo }: NavbarProps) {
         <div className="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
           {/* Logo */}
           <button onClick={() => scrollTo("hero")} className="flex-shrink-0" aria-label="Go to top">
-            <Logo3D width={272} height={82} priority />
+            <Logo width={272} height={82} priority />
           </button>
 
           {/* Desktop nav */}

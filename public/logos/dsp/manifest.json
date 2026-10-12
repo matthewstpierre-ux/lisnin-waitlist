@@ -1,0 +1,128 @@
+[
+  {
+    "file": "spotify.svg",
+    "label": "Spotify",
+    "brandHex": "#1ED760",
+    "source": "https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo"
+  },
+  {
+    "file": "applemusic.svg",
+    "label": "Apple Music",
+    "brandHex": "#FA243C",
+    "source": "https://www.apple.com/itunes/marketing-on-music/identity-guidelines.html#apple-music-icon"
+  },
+  {
+    "file": "youtubemusic.svg",
+    "label": "YouTube Music",
+    "brandHex": "#FF0000",
+    "source": "https://partnermarketinghub.withgoogle.com/#/brands"
+  },
+  {
+    "file": "tidal.svg",
+    "label": "TIDAL",
+    "brandHex": "#000000",
+    "source": "https://tidal.com/press"
+  },
+  {
+    "file": "deezer.svg",
+    "label": "Deezer",
+    "brandHex": "#A238FF",
+    "source": "https://deezerbrand.com/document/37#/-/logo"
+  },
+  {
+    "file": "pandora.svg",
+    "label": "Pandora",
+    "brandHex": "#224099",
+    "source": "https://www.pandoraforbrands.com"
+  },
+  {
+    "file": "soundcloud.svg",
+    "label": "SoundCloud",
+    "brandHex": "#FF5500",
+    "source": "https://press.soundcloud.com"
+  },
+  {
+    "file": "iheartradio.svg",
+    "label": "iHeartRadio",
+    "brandHex": "#C6002B",
+    "source": "https://brand.iheart.com/logo"
+  },
+  {
+    "file": "napster.svg",
+    "label": "Napster",
+    "brandHex": "#2259FF",
+    "source": "https://www.napster.com/us/wp-content/uploads/sites/5/2022/03/logo-napster.svg"
+  },
+  {
+    "file": "neteasecloudmusic.svg",
+    "label": "NetEase Cloud Music",
+    "brandHex": "#D43C33",
+    "source": "https://y.music.163.com/m"
+  },
+  {
+    "file": "beatport.svg",
+    "label": "Beatport",
+    "brandHex": "#01FF95",
+    "source": "https://www.beatport.com"
+  },
+  {
+    "file": "audiomack.svg",
+    "label": "Audiomack",
+    "brandHex": "#FFA200",
+    "source": "https://styleguide.audiomack.com"
+  },
+  {
+    "file": "bandcamp.svg",
+    "label": "Bandcamp",
+    "brandHex": "#408294",
+    "source": "https://bandcamp.com/buttons"
+  },
+  {
+    "file": "tiktok.svg",
+    "label": "TikTok",
+    "brandHex": "#000000",
+    "source": "https://tiktok.com"
+  },
+  {
+    "file": "instagram.svg",
+    "label": "Instagram",
+    "brandHex": "#FF0069",
+    "source": "https://about.meta.com/brand/resources/instagram"
+  },
+  {
+    "file": "facebook.svg",
+    "label": "Facebook",
+    "brandHex": "#0866FF",
+    "source": "https://about.meta.com/brand/resources/facebook/logo"
+  },
+  {
+    "file": "snapchat.svg",
+    "label": "Snapchat",
+    "brandHex": "#FFFC00",
+    "source": "https://www.snapchat.com/brand-guidelines"
+  },
+  {
+    "file": "shazam.svg",
+    "label": "Shazam",
+    "brandHex": "#0088FF",
+    "source": "https://shazam.com"
+  },
+  {
+    "file": "youtube.svg",
+    "label": "YouTube",
+    "brandHex": "#FF0000",
+    "source": "https://www.youtube.com/howyoutubeworks/resources/brand-resources/#logos-icons-and-colors"
+  },
+  {
+    "file": "sonos.svg",
+    "label": "Sonos",
+    "brandHex": "#000000",
+    "source": "https://www.sonos.com/en-gb/home"
+  },
+  {
+    "file": "triller.svg",
+    "label": "Triller",
+    "brandHex": "#FF0089",
+    "source": "https://triller.co"
+  }
+]

@@ -23,6 +23,28 @@
   --glass-bg: rgba(255, 255, 255, 0.55);
   --nav-bg: rgba(246, 245, 242, 0.85);
   --text-on-brand: #ffffff;
+  --overlay-conceal: rgba(246, 245, 242, 0.72);
+}
+
+/* ── FORCED LIGHT (used by pages that must never render dark, e.g. /events) ── */
+[data-theme="light"] {
+  --bg-base: #F6F5F2;
+  --bg-elevated: #ECEAE6;
+  --bg-subtle: #E3E1DD;
+  --brand-green: #1a7a41;
+  --brand-green-fill: #1C6E3D;
+  --brand-green-deep: #145030;
+  --brand-green-glow: rgba(28, 110, 61, 0.08);
+  --text-primary: #111010;
+  --text-secondary: rgba(12, 11, 9, 0.58);
+  --text-muted: rgba(12, 11, 9, 0.36);
+  --border-subtle: rgba(12, 11, 9, 0.08);
+  --border-default: rgba(28, 110, 61, 0.22);
+  --overlay-subtle: rgba(12, 11, 9, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --nav-bg: rgba(246, 245, 242, 0.85);
+  --text-on-brand: #ffffff;
+  --overlay-conceal: rgba(246, 245, 242, 0.72);
 }
 
 /* ── DARK MODE ──────────────────────────────────────────────────────── */
@@ -43,6 +65,7 @@
   --glass-bg: rgba(15, 15, 15, 0.4);
   --nav-bg: rgba(8, 8, 8, 0.85);
   --text-on-brand: #ffffff;
+  --overlay-conceal: rgba(8, 8, 8, 0.68);
 }
 
 html {
@@ -155,3 +178,40 @@ body::before {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── DSP marquee ("Get your music on:") ──────────────────────────────── */
+.dsp-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.dsp-track {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  width: max-content;
+  animation: dsp-scroll 45s linear infinite;
+}
+.dsp-marquee:hover .dsp-track { animation-play-state: paused; }
+@keyframes dsp-scroll {
+  to { transform: translateX(-50%); }
+}
+.dsp-track img { height: 28px; width: auto; opacity: 0.55; transition: opacity 0.2s ease; filter: grayscale(1); }
+.dsp-track img:hover { opacity: 1; }
+@media (max-width: 640px) {
+  .dsp-track img { height: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dsp-track {
+    animation: none !important;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem 3rem;
+  }
+  .dsp-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+

@@ -1,0 +1,335 @@
+/* ───────────────────────────────────────────────────────────────────────
+   /i/bizintro — investor one-sheet.
+   Tokens are scoped to :is(.biz,.bizx) so they never collide with the site palette
+   in globals.css. Colour direction inherited from the previous page.
+   ─────────────────────────────────────────────────────────────────────── */
+
+.biz, .bizx {
+  --bg:            #F6F5F2;
+  --surface:       #ECEAE6;
+  --surface2:      #E3E1DD;
+  --green:         #1C6E3D;
+  --accent:        #17683a;   /* AA-verified on --surface */
+  --accent-vivid:  #1a8d4c;
+  --glow:          rgba(28,110,61,0.09);
+  --border:        rgba(28,110,61,0.22);
+  --text:          #111010;
+  --muted:         rgba(12,11,9,0.62);
+  --muted2:        rgba(12,11,9,0.42);
+  --rule:          rgba(12,11,9,0.12);
+  --strand:        rgba(12,11,9,0.30);
+  --divider:       rgba(12,11,9,0.10);
+  --grad:          linear-gradient(145deg, #E4EEE9 0%, #EAEAE6 100%);
+  --shadow:        0 24px 48px -20px rgba(17,16,16,0.25);
+  --sky-1:         #dbe9e2;
+  --sky-2:         #eef2ec;
+  --cloud:         rgba(255,255,255,0.85);
+
+  color: var(--text);
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The standalone investor page paints its own ground; .bizx sits on the site bg. */
+.biz {
+  background: var(--bg);
+  overflow-x: hidden;
+  transition: background .3s ease, color .3s ease;
+}
+
+[data-theme="dark"] :is(.biz, .bizx) {
+  --bg:            #080808;
+  --surface:       #0f0f0f;
+  --surface2:      #141414;
+  --green:         #1C6E3D;
+  --accent:        #35b863;
+  --accent-vivid:  #46d978;
+  --glow:          rgba(41,163,84,0.16);
+  --border:        rgba(41,163,84,0.34);
+  --text:          #F5F5F0;
+  --muted:         rgba(245,245,240,0.64);
+  --muted2:        rgba(245,245,240,0.40);
+  --rule:          rgba(245,245,240,0.12);
+  --strand:        rgba(245,245,240,0.32);
+  --divider:       rgba(245,245,240,0.09);
+  --grad:          linear-gradient(145deg, #0f1f16 0%, #0f0f0f 100%);
+  --shadow:        0 24px 48px -20px rgba(0,0,0,0.6);
+  --sky-1:         #0a1510;
+  --sky-2:         #070b09;
+  --cloud:         rgba(53,184,99,0.10);
+}
+
+/* ── TYPE: five sizes, emphasis by weight/colour only ──────────────── */
+:is(.biz,.bizx) .t-display { font-size: clamp(1.95rem, 4.3vw, 3.1rem); line-height: 1.03; letter-spacing: -.035em; font-weight: 700; }
+:is(.biz,.bizx) .t-h2      { font-size: clamp(1.35rem, 2.5vw, 1.85rem); line-height: 1.1;  letter-spacing: -.025em; font-weight: 700; }
+:is(.biz,.bizx) .t-lead    { font-size: clamp(.98rem, 1.4vw, 1.08rem); line-height: 1.55; color: var(--muted); }
+:is(.biz,.bizx) .t-body    { font-size: .9175rem; line-height: 1.6; color: var(--muted); }
+:is(.biz,.bizx) .t-micro   { font-size: .6875rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
+:is(.biz,.bizx) .eyebrow   { color: var(--accent); margin-bottom: 9px; }
+
+/* ── LAYOUT — tightened: this must read shorter than the old page ──── */
+:is(.biz,.bizx) .page   { max-width: 1060px; margin: 0 auto; padding: 0 32px; }
+:is(.biz,.bizx) section { padding: clamp(26px, 3vw, 42px) 0; position: relative; }
+:is(.biz,.bizx) section + section { border-top: 1px solid var(--divider); }
+:is(.biz,.bizx) .narrow { max-width: 660px; }
+:is(.biz,.bizx) .center { text-align: center; margin-left: auto; margin-right: auto; }
+:is(.biz,.bizx) a { color: var(--accent); }
+:is(.biz,.bizx) :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+:is(.biz,.bizx) .skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--green); color: #fff; padding: 10px 16px; }
+:is(.biz,.bizx) .skip:focus { left: 0; }
+
+/* ── TOPBAR — logo optically centred against the toggle ────────────── */
+:is(.biz,.bizx) .topbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 0 0; }
+:is(.biz,.bizx) .logo-l { display: block; height: 38px; width: auto; }
+:is(.biz,.bizx) .logo-d { display: none;  height: 38px; width: auto; }
+[data-theme="dark"] :is(.biz,.bizx) .logo-l { display: none; }
+[data-theme="dark"] :is(.biz,.bizx) .logo-d { display: block; }
+
+:is(.biz,.bizx) .toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; cursor: pointer; background: transparent; padding: 0; }
+:is(.biz,.bizx) .toggle:hover { border-color: var(--accent); }
+:is(.biz,.bizx) .t-opt { padding: 5px 12px; font-size: 10.5px; font-weight: 600; letter-spacing: .07em; color: var(--muted); }
+:is(.biz,.bizx) .t-on  { color: var(--accent); background: var(--glow); }
+
+/* ── BUTTONS ───────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .btn { display: inline-flex; align-items: center; justify-content: center; background: var(--green); color: #fff;
+  border: none; border-radius: 10px; padding: 12px 25px; font-family: inherit; font-size: .89rem; font-weight: 600;
+  cursor: pointer; text-decoration: none; }
+:is(.biz,.bizx) .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--rule); }
+:is(.biz,.bizx) .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── HERO ──────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .hero { padding-top: clamp(16px, 2.2vw, 30px); padding-bottom: clamp(26px, 3vw, 42px); }
+:is(.biz,.bizx) .chips { display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; margin: 15px 0 17px; }
+:is(.biz,.bizx) .chip { font-size: 11.5px; font-weight: 600; color: var(--muted); border: 1px solid var(--rule); border-radius: 20px; padding: 6px 14px; }
+:is(.biz,.bizx) .chip b { color: var(--text); }
+:is(.biz,.bizx) .hero-cta { display: flex; gap: 11px; justify-content: center; flex-wrap: wrap; }
+
+/* Scatter field — fragments converge into the panel on hover */
+:is(.biz,.bizx) .stage { position: relative; height: clamp(206px, 22vw, 248px);
+  margin: clamp(38px,4.4vw,58px) 0 clamp(40px,4.6vw,60px); cursor: pointer; }
+:is(.biz,.bizx) .frag { position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 7px; padding: 8px 13px;
+  border-radius: 9px; background: var(--surface); border: 1px solid var(--rule); font-size: 11px; font-weight: 500;
+  color: var(--muted); white-space: nowrap; box-shadow: 0 8px 22px -14px rgba(0,0,0,.35); will-change: transform; }
+:is(.biz,.bizx) .frag i { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+:is(.biz,.bizx) .panel { position: absolute; left: 50%; top: 50%; width: min(470px, 86vw); padding: 22px 24px; border-radius: 14px;
+  background: var(--grad); border: 1px solid var(--border); box-shadow: 0 26px 64px -32px rgba(28,110,61,.55);
+  text-align: center; will-change: transform; }
+:is(.biz,.bizx) .panel-t { font-size: .95rem; font-weight: 700; letter-spacing: -.01em; }
+:is(.biz,.bizx) .panel-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 11px; }
+:is(.biz,.bizx) .panel-row span { font-size: 9.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent);
+  background: var(--glow); border: 1px solid var(--border); padding: 4px 9px; border-radius: 20px; }
+
+/* ── DREAM ─────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .dream { overflow: hidden; }
+:is(.biz,.bizx) .sky { position: absolute; inset: 0; background: linear-gradient(180deg, var(--sky-1), var(--sky-2) 70%, transparent);
+  pointer-events: none; z-index: 0; }
+:is(.biz,.bizx) .cloud { position: absolute; border-radius: 50%; background: var(--cloud); filter: blur(34px); pointer-events: none; will-change: transform; }
+:is(.biz,.bizx) .flare { position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 70%); will-change: transform, opacity; }
+:is(.biz,.bizx) .dream-inner { position: relative; z-index: 1; text-align: center; max-width: 720px; margin: 0 auto; }
+:is(.biz,.bizx) .dream-q { font-family: var(--font-epilogue), serif; font-style: italic; font-weight: 400;
+  font-size: clamp(1.18rem, 2.5vw, 1.8rem); line-height: 1.3; letter-spacing: -.02em; }
+:is(.biz,.bizx) .dream-sub { margin-top: 13px; font-size: .9175rem; color: var(--muted); line-height: 1.6; }
+
+/* ── NUMBER BAND ───────────────────────────────────────────────────── */
+:is(.biz,.bizx) .band { display: grid; grid-template-columns: repeat(4,1fr); }
+:is(.biz,.bizx) .bcell { padding: 0 18px; border-left: 1px solid var(--divider); }
+:is(.biz,.bizx) .bcell:first-child { border-left: none; padding-left: 0; }
+:is(.biz,.bizx) .bval { font-size: clamp(1.6rem,3.3vw,2.5rem); font-weight: 700; letter-spacing: -.035em; line-height: 1; }
+:is(.biz,.bizx) .bval.g { color: var(--accent); }
+:is(.biz,.bizx) .blab { font-size: .775rem; color: var(--muted); margin-top: 9px; line-height: 1.45; }
+
+/* ── VIDEO ─────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .video { position: relative; width: 100%; border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
+  background: #000; box-shadow: var(--shadow); }
+:is(.biz,.bizx) .video video, :is(.biz,.bizx) .video iframe { display: block; width: 100%; aspect-ratio: 16/9; height: auto; background: #000; border: none; }
+:is(.biz,.bizx) .vcap { font-family: var(--font-epilogue), serif; font-style: italic; font-size: .82rem; color: var(--muted); text-align: center; margin-top: 9px; }
+
+:is(.biz,.bizx) .vpair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { :is(.biz,.bizx) .vpair { grid-template-columns: 1fr; gap: 18px; } }
+
+/* ── PROBLEM ───────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .tangle { width: 100%; height: auto; display: block; }
+/* These labels were unreadable before — now full body-copy contrast. */
+:is(.biz,.bizx) .tlab   { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; fill: var(--muted); }
+:is(.biz,.bizx) .tlab-a { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; fill: var(--accent); }
+
+:is(.biz,.bizx) .strand { stroke: var(--strand); stroke-width: 1.4; fill: none; will-change: transform; }
+
+/* ── AI MANAGER ────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .prompt { border-radius: 15px; background: var(--surface); border: 1px solid var(--border);
+  padding: clamp(15px,1.9vw,22px); box-shadow: 0 28px 66px -46px rgba(28,110,61,.55); }
+:is(.biz,.bizx) .pline { display: flex; align-items: flex-start; gap: 11px; background: var(--bg); border: 1px solid var(--rule);
+  border-radius: 10px; padding: 11px 14px; margin-bottom: 12px; }
+:is(.biz,.bizx) .pdot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 7px; flex-shrink: 0; }
+:is(.biz,.bizx) .ptext { font-size: .96rem; font-weight: 500; line-height: 1.45; }
+:is(.biz,.bizx) .caret { display: inline-block; width: 2px; height: 1em; background: var(--accent); vertical-align: text-bottom; margin-left: 2px; }
+:is(.biz,.bizx) .acts { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border-radius: 9px; overflow: hidden; }
+:is(.biz,.bizx) .act { display: flex; align-items: center; justify-content: space-between; gap: 13px; background: var(--surface); padding: 8px 14px; }
+:is(.biz,.bizx) .aname { font-size: .86rem; font-weight: 500; }
+:is(.biz,.bizx) .astate { font-size: 9.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; white-space: nowrap; }
+:is(.biz,.bizx) .s-done { color: var(--accent); background: var(--glow); border: 1px solid var(--border); }
+:is(.biz,.bizx) .s-run  { color: var(--muted); background: var(--rule); border: 1px solid var(--rule); }
+:is(.biz,.bizx) .s-ok   { color: var(--text); background: transparent; border: 1px solid var(--rule); }
+
+/* Rails: compact 5-across grid, not a long vertical stack */
+:is(.biz,.bizx) .hub { text-align: center; margin: 0 auto; max-width: 340px; padding: 11px 18px; border-radius: 10px;
+  background: var(--grad); border: 1px solid var(--border); font-size: .8rem; font-weight: 700; }
+:is(.biz,.bizx) .conn { display: block; width: 100%; height: 48px; overflow: visible; }
+:is(.biz,.bizx) .conn-base { stroke: var(--rule); stroke-width: 1.4; fill: none; }
+:is(.biz,.bizx) .conn-live { stroke: var(--accent-vivid); stroke-width: 2.2; fill: none; stroke-linecap: round;
+  filter: drop-shadow(0 0 4px var(--glow)); }
+:is(.biz,.bizx) .rails { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+:is(.biz,.bizx) .rail { padding: 13px 12px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 9px; will-change: transform; }
+:is(.biz,.bizx) .rnum { font-size: 9.5px; font-weight: 700; letter-spacing: .14em; color: var(--accent); }
+:is(.biz,.bizx) .rname { font-size: .89rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+:is(.biz,.bizx) .rcopy { font-size: .775rem; color: var(--muted); line-height: 1.45; }
+:is(.biz,.bizx) .rvis { height: 46px; width: 100%; margin-top: auto; }
+:is(.biz,.bizx) .rvis svg { width: 100%; height: 100%; overflow: visible; }
+:is(.biz,.bizx) .vl { stroke: var(--rule); stroke-width: 1.2; fill: none; }
+:is(.biz,.bizx) .va { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+:is(.biz,.bizx) .vd { fill: var(--accent); }
+:is(.biz,.bizx) .vn { fill: var(--surface2); stroke: var(--rule); stroke-width: 1; }
+:is(.biz,.bizx) .vt { font-size: 7px; font-weight: 700; letter-spacing: .05em; fill: var(--muted2); text-transform: uppercase; }
+:is(.biz,.bizx) .moat { margin-top: 17px; padding: 15px 22px; border-radius: 12px; background: var(--grad); border: 1px solid var(--border);
+  font-size: .92rem; line-height: 1.55; text-align: center; }
+
+/* ── FLYWHEEL ──────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .fly { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px,3.5vw,46px); align-items: center; }
+:is(.biz,.bizx) .flysvg { width: 100%; max-width: 285px; margin: 0 auto; display: block; overflow: visible; }
+:is(.biz,.bizx) .fring { stroke: var(--rule); stroke-width: 1.4; fill: none; }
+:is(.biz,.bizx) .farc  { stroke: var(--accent-vivid); stroke-width: 3; fill: none; stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--glow)); }
+:is(.biz,.bizx) .fnode circle { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+:is(.biz,.bizx) .fnode text { font-size: 9px; font-weight: 700; letter-spacing: .07em; fill: var(--text); text-anchor: middle; }
+:is(.biz,.bizx) .fnode .n { font-size: 7.5px; fill: var(--accent); }
+:is(.biz,.bizx) .fsteps { display: flex; flex-direction: column; gap: 11px; }
+:is(.biz,.bizx) .fstep { display: flex; gap: 12px; align-items: flex-start; }
+:is(.biz,.bizx) .fstep b { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: var(--accent); width: 20px; padding-top: 3px; flex-shrink: 0; }
+:is(.biz,.bizx) .fstep div { font-size: .86rem; line-height: 1.45; }
+:is(.biz,.bizx) .fstep span { color: var(--muted); }
+
+/* ── MODEL ─────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .tiers { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 18px; }
+:is(.biz,.bizx) .tier { padding: 14px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); }
+:is(.biz,.bizx) .tier.hl { background: var(--grad); border-color: var(--border); }
+:is(.biz,.bizx) .tn { font-size: 9.5px; font-weight: 700; letter-spacing: .14em; color: var(--accent); }
+:is(.biz,.bizx) .tp { font-size: 1.4rem; font-weight: 700; letter-spacing: -.03em; margin: 7px 0 5px; }
+:is(.biz,.bizx) .tp s { font-size: .78rem; color: var(--muted); font-weight: 500; text-decoration: none; }
+:is(.biz,.bizx) .td { font-size: .77rem; color: var(--muted); line-height: 1.4; }
+/* Plan feature lists — the deck lays each plan out as a box of bullets. */
+:is(.biz,.bizx) .tier { display: flex; flex-direction: column; }
+:is(.biz,.bizx) .tfeat { list-style: none; margin: 10px 0 0; padding: 10px 0 0; border-top: 1px solid var(--rule);
+  display: flex; flex-direction: column; gap: 7px; }
+:is(.biz,.bizx) .tfeat li { position: relative; padding-left: 16px; font-size: .775rem; line-height: 1.4; color: var(--muted); }
+:is(.biz,.bizx) .tfeat li::before { content: ''; position: absolute; left: 0; top: .42em; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--glow); border: 1px solid var(--accent); }
+:is(.biz,.bizx) .tier.hl .tfeat li:first-child,
+:is(.biz,.bizx) .tfeat li:first-child { color: var(--text); font-weight: 600; }
+:is(.biz,.bizx) .chart { width: 100%; max-width: 700px; margin: 0 auto; height: auto; display: block; overflow: visible; }
+:is(.biz,.bizx) .cg { stroke: var(--divider); stroke-width: 1; }
+:is(.biz,.bizx) .cl { stroke: var(--accent-vivid); stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px var(--glow)); }
+:is(.biz,.bizx) .cf { fill: var(--glow); }
+:is(.biz,.bizx) .cd { fill: var(--accent-vivid); }
+:is(.biz,.bizx) .clab { font-size: 9px; font-weight: 700; fill: var(--text); }
+:is(.biz,.bizx) .csub { font-size: 7.5px; font-weight: 500; fill: var(--muted2); letter-spacing: .04em; }
+:is(.biz,.bizx) .cbe  { stroke: var(--border); stroke-width: 1.25; stroke-dasharray: 3 3; }
+
+/* ── TEAM ──────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .team { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; }
+:is(.biz,.bizx) .tm { padding: 15px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); }
+:is(.biz,.bizx) .tmn { font-size: .95rem; font-weight: 700; letter-spacing: -.015em; }
+:is(.biz,.bizx) .tmr { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin: 6px 0 9px; }
+:is(.biz,.bizx) .tmb { font-size: .8rem; color: var(--muted); line-height: 1.5; }
+:is(.biz,.bizx) .adv { margin-top: 13px; font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+/* ── SUPPORTED BY ──────────────────────────────────────────────────── */
+:is(.biz,.bizx) .sup { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: clamp(20px,4vw,46px); flex-wrap: wrap; }
+:is(.biz,.bizx) .sup-l { font-size: 9.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted2); flex: 0 0 auto; }
+:is(.biz,.bizx) .sup-row { display: flex; align-items: center; gap: clamp(18px,3vw,36px); flex-wrap: wrap; row-gap: 18px; }
+:is(.biz,.bizx) .sup-row img { width: auto; opacity: .62; filter: grayscale(1); }
+:is(.biz,.bizx) .sup-row > img { display: block; }
+:is(.biz,.bizx) .sup-row img:hover { opacity: .95; }
+/* CDL ships no light-on-dark variant — invert its greyscale so it survives dark mode */
+[data-theme="dark"] :is(.biz,.bizx) .sup-row > img { filter: grayscale(1) invert(1); opacity: .5; }
+[data-theme="dark"] :is(.biz,.bizx) .sup-row > img:hover { opacity: .8; }
+@media (max-width: 560px) { :is(.biz,.bizx) .sup { gap: 14px; } :is(.biz,.bizx) .sup-row { gap: 24px; } }
+
+/* ── ASK ───────────────────────────────────────────────────────────── */
+:is(.biz,.bizx) .bks { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin: 18px 0; }
+:is(.biz,.bizx) .bk { padding: 13px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); }
+:is(.biz,.bizx) .bkn { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 8px; }
+:is(.biz,.bizx) .bkd { font-size: .79rem; color: var(--muted); line-height: 1.45; }
+:is(.biz,.bizx) .derisk { padding: 17px 24px; border-radius: 12px; background: var(--grad); border: 1px solid var(--border);
+  font-family: var(--font-epilogue), serif; font-style: italic; font-size: clamp(.98rem,1.9vw,1.15rem); line-height: 1.5; text-align: center; }
+:is(.biz,.bizx) .closer { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+:is(.biz,.bizx) .foot { padding: 22px 0 38px; text-align: center; font-size: .79rem; color: var(--muted); line-height: 1.75; }
+:is(.biz,.bizx) .foot a { color: var(--muted); text-decoration: none; }
+:is(.biz,.bizx) .foot a:hover { color: var(--accent); }
+
+/* ── MODAL ─────────────────────────────────────────────────────────── */
+.biz-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 50;
+  display: flex; align-items: center; justify-content: center; padding: 20px; }
+.biz-modal { position: relative; width: 100%; max-width: 420px; background: var(--bg, #F6F5F2); color: var(--text, #111);
+  border: 1px solid var(--border, rgba(28,110,61,.22)); border-radius: 14px; padding: 28px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); }
+.biz-close { position: absolute; top: 13px; right: 13px; background: none; border: none; color: var(--muted); font-size: 15px; cursor: pointer; padding: 4px; }
+.biz-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: 6px; }
+.biz-sub { font-size: .84rem; color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+.biz-field { margin-bottom: 13px; }
+.biz-label { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.biz-input { width: 100%; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px;
+  font-family: inherit; font-size: .89rem; color: var(--text); }
+.biz-input:focus { outline: none; border-color: var(--accent); }
+.biz-submit { width: 100%; background: var(--green); color: #fff; border: none; border-radius: 8px; padding: 12px;
+  font-family: inherit; font-size: .89rem; font-weight: 600; cursor: pointer; margin-top: 3px; }
+.biz-submit:disabled { opacity: .6; cursor: not-allowed; }
+.biz-hp { position: absolute; left: -9999px; opacity: 0; }
+.biz-msg { font-size: .84rem; color: var(--muted); line-height: 1.55; }
+.biz-msg.err { color: #c0392b; margin-top: 9px; }
+[data-theme="dark"] .biz-msg.err { color: #ff6b5a; }
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  :is(.biz,.bizx) .rails { grid-template-columns: repeat(3,1fr); }
+  :is(.biz,.bizx) .conn { display: none; }   /* curves only make sense in the 5-across layout */
+  /* The connectors carried the gap under the hub; without them the rails
+     would sit flush against it. */
+  :is(.biz,.bizx) .rails { margin-top: 26px; }
+}
+@media (max-width: 860px) {
+  :is(.biz,.bizx) .page { padding: 0 22px; }
+  :is(.biz,.bizx) .band { grid-template-columns: 1fr 1fr; gap: 22px 0; }
+  :is(.biz,.bizx) .bcell:nth-child(3) { border-left: none; padding-left: 0; }
+  :is(.biz,.bizx) .fly { grid-template-columns: 1fr; }
+  :is(.biz,.bizx) .team, :is(.biz,.bizx) .tiers { grid-template-columns: 1fr; }
+  :is(.biz,.bizx) .bks { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 620px) {
+  :is(.biz,.bizx) .rails { grid-template-columns: repeat(2,1fr); }
+  /* The field is scaled down on narrow screens, so the stage follows it in —
+     at full height it would leave a dead band under the fragments. The field
+     is sized to stay inside the stage here, so nothing needs clipping and the
+     converged panel is free to be taller than the box. */
+  :is(.biz,.bizx) .stage { overflow: visible; height: 176px; margin: 26px 0 30px; }
+  :is(.biz,.bizx) .frag { font-size: 10px; padding: 6px 10px; }
+  :is(.biz,.bizx) .panel { padding: 16px 16px; }
+  :is(.biz,.bizx) .panel-row { margin-top: 9px; }
+  /* The logo is set from its intrinsic ratio, which left the toggle no room
+     to sit beside it on a phone. */
+  :is(.biz,.bizx) .logo-l, :is(.biz,.bizx) .logo-d { height: 29px; }
+  :is(.biz,.bizx) .topbar { gap: 12px; padding-top: 18px; }
+  :is(.biz,.bizx) .toggle { flex: 0 0 auto; }
+}
+@media (max-width: 420px) {
+  :is(.biz,.bizx) .stage { height: 158px; }
+  :is(.biz,.bizx) .logo-l, :is(.biz,.bizx) .logo-d { height: 26px; }
+}
+@media (max-width: 460px) {
+  :is(.biz,.bizx) .band { grid-template-columns: 1fr; }
+  :is(.biz,.bizx) .bcell { border-left: none; padding-left: 0; border-top: 1px solid var(--divider); padding-top: 16px; }
+  :is(.biz,.bizx) .bcell:first-child { border-top: none; padding-top: 0; }
+  :is(.biz,.bizx) .rails, :is(.biz,.bizx) .bks { grid-template-columns: 1fr; }
+}

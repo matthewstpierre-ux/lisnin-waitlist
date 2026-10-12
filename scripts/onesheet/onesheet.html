@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Epilogue:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  /* Same palette and type pairing as /i/bizintro, tuned for print. */
+  :root{
+    --bg:#F6F5F2; --surface:#ECEAE6; --surface2:#E3E1DD;
+    --green:#1C6E3D; --accent:#17683a; --vivid:#1a8d4c;
+    --glow:rgba(28,110,61,.09); --border:rgba(28,110,61,.26);
+    --text:#111010; --muted:rgba(12,11,9,.66); --muted2:rgba(12,11,9,.46);
+    --rule:rgba(12,11,9,.14); --strand:rgba(12,11,9,.19); --stray:rgba(12,11,9,.12);
+    --grad:linear-gradient(145deg,#E4EEE9 0%,#EAEAE6 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @page{size:Letter;margin:0}
+  html,body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;-webkit-font-smoothing:antialiased}
+
+  /* US Letter at 96dpi = 816 x 1056 */
+  .sheet{width:816px;height:1056px;padding:30px 36px 26px;display:flex;flex-direction:column;gap:9px;overflow:hidden}
+
+  .micro{font-size:6.6px;letter-spacing:.17em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+  .rule{height:1px;background:var(--rule)}
+
+  /* ── header ── */
+  .head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .head svg{height:26px;width:auto;display:block}
+  .terms{display:flex;gap:6px}
+  .term{font-size:7.4px;font-weight:600;color:var(--muted);border:1px solid var(--rule);border-radius:20px;padding:3.5px 9px;white-space:nowrap}
+  .term b{color:var(--text);font-weight:700}
+
+  /* ── hero ── */
+  .h1{font-size:30px;line-height:1.02;letter-spacing:-.033em;font-weight:700;margin-top:2px}
+  .sub{font-size:9.6px;line-height:1.5;color:var(--muted);max-width:560px;margin-top:6px}
+
+  /* ── stats ── */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+  .stat{padding:9px 12px;border-left:1px solid var(--rule)}
+  .stat:first-child{border-left:none}
+  .sv{font-size:19px;font-weight:700;letter-spacing:-.035em;line-height:1}
+  .sv.g{color:var(--accent)}
+  .sl{font-size:7px;color:var(--muted);margin-top:4px;line-height:1.35}
+
+  /* ── two-up ── */
+  .two{display:grid;grid-template-columns:1fr 1.18fr;gap:11px;align-items:stretch}
+  .card{border:1px solid var(--rule);border-radius:9px;padding:10px 12px;background:var(--surface)}
+  .card.plain{background:transparent;display:flex;flex-direction:column}
+  .ch{font-size:11.4px;font-weight:700;letter-spacing:-.02em;margin:3px 0 4px;line-height:1.18}
+  .cb{font-size:8.2px;line-height:1.5;color:var(--muted)}
+
+  /* problem strands — a dozen services fraying, four of them never joining */
+  .strands{width:100%;height:112px;display:block;margin:auto 0 2px}
+  .strand{stroke:var(--strand);stroke-width:.9;stroke-linecap:round;fill:none}
+  .stray{stroke:var(--stray);stroke-width:.9;stroke-linecap:round;fill:none}
+  .tip{fill:none;stroke:var(--stray);stroke-width:.9}
+  .seed{fill:var(--strand)}
+  .axis{stroke:var(--vivid);stroke-width:2;stroke-linecap:round;fill:none}
+
+  /* agent prompt */
+  .prompt{background:var(--bg);border:1px solid var(--rule);border-radius:7px;padding:7px 9px;display:flex;gap:7px;align-items:flex-start}
+  .pdot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:4px;flex:0 0 auto}
+  .ptxt{font-size:8.6px;font-weight:600;line-height:1.35}
+  .acts{margin-top:6px;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .act{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4.5px 9px;border-top:1px solid var(--rule);background:var(--bg)}
+  .act:first-child{border-top:none}
+  .an{font-size:7.8px;font-weight:500}
+  .as{font-size:6.2px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:20px;white-space:nowrap}
+  .s-done{color:var(--accent);background:var(--glow);border:1px solid var(--border)}
+  .s-run{color:var(--muted);background:var(--surface2);border:1px solid var(--rule)}
+  .s-ok{color:var(--text);background:transparent;border:1px solid var(--rule)}
+
+  /* ── rails ── */
+  .rails{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+  .rail{border:1px solid var(--border);border-radius:8px;padding:8px 9px;background:var(--surface)}
+  .rn{font-size:6.2px;font-weight:700;letter-spacing:.13em;color:var(--accent)}
+  .rt{font-size:8.8px;font-weight:700;letter-spacing:-.01em;margin:3px 0 3px;line-height:1.15}
+  .rc{font-size:7.1px;line-height:1.4;color:var(--muted)}
+  .moat{margin-top:6px;background:var(--grad);border:1px solid var(--border);border-radius:8px;padding:7px 11px;font-size:8.4px;line-height:1.45;text-align:center}
+
+  /* ── flywheel + pricing ── */
+  .fly{display:flex;gap:10px;align-items:center}
+  .fly svg{width:104px;height:104px;flex:0 0 auto}
+  .fring{stroke:var(--rule);stroke-width:1.3;fill:none}
+  .farc{stroke:var(--vivid);stroke-width:2.6;fill:none;stroke-linecap:round}
+  .fn circle{fill:var(--surface);stroke:var(--border);stroke-width:1.3}
+  .fn text{font-size:8px;font-weight:700;letter-spacing:.06em;fill:var(--text);text-anchor:middle}
+  .fn .n{font-size:6.6px;fill:var(--accent)}
+  .fsteps{display:flex;flex-direction:column;gap:3px}
+  .fs{font-size:7.4px;line-height:1.35}
+  .fs b{color:var(--accent);font-weight:700;letter-spacing:.08em;margin-right:4px}
+  .fs span{color:var(--muted)}
+
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .tier{border:1px solid var(--rule);border-radius:8px;padding:8px 9px;background:var(--surface)}
+  .tier.hl{background:var(--grad);border-color:var(--border)}
+  .tn{font-size:6.2px;font-weight:700;letter-spacing:.13em;color:var(--accent)}
+  .tp{font-size:14px;font-weight:700;letter-spacing:-.03em;margin:3px 0 3px}
+  .tp s{font-size:7px;color:var(--muted);font-weight:500;text-decoration:none}
+  .td{font-size:7.1px;line-height:1.4;color:var(--muted)}
+
+  /* ── dream ── */
+  .dream{background:var(--grad);border:1px solid var(--border);border-radius:9px;padding:11px 16px;text-align:center}
+  .dq{font-family:'Epilogue',serif;font-style:italic;font-size:11.6px;line-height:1.35;letter-spacing:-.015em}
+  .ds{font-size:7.6px;color:var(--muted);margin-top:5px;line-height:1.4}
+
+  /* ── team ── */
+  .team{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tm{border:1px solid var(--rule);border-radius:8px;padding:8px 9px;background:var(--surface)}
+  .tmn{font-size:9px;font-weight:700;letter-spacing:-.015em}
+  .tmr{font-size:6.2px;font-weight:700;letter-spacing:.12em;color:var(--accent);margin:3px 0 4px}
+  .tmb{font-size:7.1px;line-height:1.4;color:var(--muted)}
+  .adv{font-size:7px;color:var(--muted);line-height:1.4;margin-top:5px}
+
+  /* ── ask ── */
+  .bks{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+  .bk{border:1px solid var(--rule);border-radius:8px;padding:7px 9px;background:var(--surface)}
+  .bkn{font-size:6.4px;font-weight:700;letter-spacing:.11em;color:var(--accent);margin-bottom:4px}
+  .bkd{font-size:7px;line-height:1.38;color:var(--muted)}
+  .derisk{background:var(--grad);border:1px solid var(--border);border-radius:8px;padding:8px 12px;
+    font-family:'Epilogue',serif;font-style:italic;font-size:9.4px;line-height:1.4;text-align:center;margin-top:6px}
+
+  /* ── footer ── */
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:8px;border-top:1px solid var(--rule)}
+  .fc{font-size:7.4px;line-height:1.55;color:var(--muted)}
+  .fc b{color:var(--text)}
+  .qr{display:flex;align-items:center;gap:7px}
+  .qr svg{width:42px;height:42px;display:block}
+  .qrl{font-size:6.4px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted2);line-height:1.4;max-width:72px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="head">
+    <!--LOGO-->
+    <div class="terms">
+      <span class="term">Pre-seed <b>$250K USD</b></span>
+      <span class="term"><b>$2.75M</b> post-money cap</span>
+      <span class="term">Launching <b>Dec 2026</b></span>
+    </div>
+  </div>
+
+  <div>
+    <div class="h1">An entire music career, run by one agent.</div>
+    <div class="sub">Lisnin owns the distribution, publishing, websites and promotion rails &mdash; so the AI Manager executes a career instead of advising on it.</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="sv">80K+</div><div class="sl">Community, built before the product</div></div>
+    <div class="stat"><div class="sv g">$200K+</div><div class="sl">Moved to artists pre-product, zero paid acquisition</div></div>
+    <div class="stat"><div class="sv">Month 7&ndash;8</div><div class="sl">Breakeven on subscription revenue alone, ~1,140 subs</div></div>
+    <div class="stat"><div class="sv g">$5.4B</div><div class="sl">Addressable market across independent distribution, publishing and marketing</div></div>
+  </div>
+
+  <div class="two">
+    <div class="card plain">
+      <div class="micro">The problem</div>
+      <div class="ch">A career built on fragments.</div>
+      <div class="cb">A working artist is their own label, publisher, marketer and manager &mdash; stitching a dozen services together and paying for most of them.</div>
+      <svg class="strands" viewBox="0 0 320 96" aria-hidden="true">
+        <!-- strands that find their way onto the one line -->
+        <path class="strand" d="M12,16 C64,16 122,26 182,48"/>
+        <path class="strand" d="M12,38 C62,38 126,42 182,48"/>
+        <path class="strand" d="M12,58 C62,58 126,54 182,48"/>
+        <path class="strand" d="M12,80 C64,80 122,70 182,48"/>
+        <!-- and the ones that branch off and dead-end -->
+        <path class="stray" d="M12,27 C70,25 130,21 198,15 C232,12 264,11 294,11"/>
+        <path class="stray" d="M12,44 C50,38 84,25 118,14 C140,7 162,4 184,3"/>
+        <path class="stray" d="M12,52 C50,59 84,72 118,83 C140,90 162,93 184,94"/>
+        <path class="stray" d="M12,69 C70,71 130,75 198,81 C232,84 264,85 294,85"/>
+        <circle class="tip" cx="294" cy="11" r="2"/><circle class="tip" cx="184" cy="3" r="2"/>
+        <circle class="tip" cx="184" cy="94" r="2"/><circle class="tip" cx="294" cy="85" r="2"/>
+        <circle class="seed" cx="12" cy="16" r="1.5"/><circle class="seed" cx="12" cy="38" r="1.5"/>
+        <circle class="seed" cx="12" cy="58" r="1.5"/><circle class="seed" cx="12" cy="80" r="1.5"/>
+        <!-- the one line -->
+        <path class="axis" d="M182,48 L314,48"/>
+        <circle cx="182" cy="48" r="2.4" fill="#1a8d4c"/><circle cx="314" cy="48" r="2.8" fill="#1a8d4c"/>
+      </svg>
+      <div class="cb" style="margin-top:3px;color:#17683a;font-weight:700;font-size:7.2px;letter-spacing:.08em;text-transform:uppercase">One platform &middot; one login &middot; one bill</div>
+    </div>
+
+    <div class="card">
+      <div class="micro">The AI Manager</div>
+      <div class="ch">It doesn&rsquo;t advise. It operates.</div>
+      <div class="prompt"><span class="pdot"></span><span class="ptxt">&ldquo;Release my album everywhere and start the campaign.&rdquo;</span></div>
+      <div class="acts">
+        <div class="act"><span class="an">Delivered to 150+ stores</span><span class="as s-done">Done</span></div>
+        <div class="act"><span class="an">Publishing registered worldwide</span><span class="as s-done">Done</span></div>
+        <div class="act"><span class="an">Website updated with the release</span><span class="as s-done">Done</span></div>
+        <div class="act"><span class="an">Pitching 40 blogs, radio and playlists</span><span class="as s-run">Running</span></div>
+        <div class="act"><span class="an">Listening Party campaign ready</span><span class="as s-ok">Approve</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="micro" style="margin-bottom:5px">Five owned rails &middot; one subscription</div>
+    <div class="rails">
+      <div class="rail"><div class="rn">RAIL 01</div><div class="rt">Distribution</div><div class="rc">150+ stores, 0% commission, unlimited releases, Dolby Atmos.</div></div>
+      <div class="rail"><div class="rn">RAIL 02</div><div class="rt">Publishing</div><div class="rc">Collected worldwide. The artist keeps 85%.</div></div>
+      <div class="rail"><div class="rn">RAIL 03</div><div class="rt">Earkitz Websites</div><div class="rc">A site that fills itself from catalogue, streams and press.</div></div>
+      <div class="rail"><div class="rn">RAIL 04</div><div class="rt">Contact Directory</div><div class="rc">Thousands of vetted contacts. The pitch goes out as the artist.</div></div>
+      <div class="rail"><div class="rn">RAIL 05</div><div class="rt">Listening Parties</div><div class="rc">Discord-native. One token, one listener. 75% of spend goes to them.</div></div>
+    </div>
+    <div class="moat">Every competitor&rsquo;s agent can only recommend or access a single feature on each platform. Lisnin&rsquo;s AI Manager executes everything in one place.</div>
+  </div>
+
+  <div class="two">
+    <div class="card plain">
+      <div class="micro" style="margin-bottom:5px">The flywheel</div>
+      <div class="fly">
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle class="fring" cx="110" cy="110" r="84"/>
+          <circle class="farc" cx="110" cy="110" r="84" transform="rotate(-90 110 110)"/>
+          <circle cx="110" cy="26" r="4.5" fill="#1a8d4c"/>
+          <g class="fn"><circle cx="110" cy="26" r="21"/><text x="110" y="23" class="n">01</text><text x="110" y="34">DIST.</text></g>
+          <g class="fn"><circle cx="194" cy="110" r="21"/><text x="194" y="107" class="n">02</text><text x="194" y="118">VERIFY</text></g>
+          <g class="fn"><circle cx="110" cy="194" r="21"/><text x="110" y="191" class="n">03</text><text x="110" y="202">LIST</text></g>
+          <g class="fn"><circle cx="26" cy="110" r="21"/><text x="26" y="107" class="n">04</text><text x="26" y="118">RAISE</text></g>
+        </svg>
+        <div class="fsteps">
+          <div class="fs"><b>01</b>Distribute<span> &mdash; live on 150+ stores.</span></div>
+          <div class="fs"><b>02</b>Verify<span> &mdash; streaming and royalty data accrues on-platform.</span></div>
+          <div class="fs"><b>03</b>List<span> &mdash; verified data underwrites a listing, Month 16.</span></div>
+          <div class="fs"><b>04</b>Raise<span> &mdash; artists with traction raise from the community.</span></div>
+          <div class="fs" style="margin-top:3px;color:var(--muted)">Marketplace eligibility requires distributing on Lisnin &mdash; the switching incentive no competitor can copy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card plain">
+      <div class="micro" style="margin-bottom:5px">Pricing &middot; the same stack costs $400&ndash;500</div>
+      <div class="tiers">
+        <div class="tier"><div class="tn">START</div><div class="tp">$50<s>/yr</s></div><div class="td">Unlimited 0% distribution to 150+ platforms, plus one Earkitz website.</div></div>
+        <div class="tier"><div class="tn">MANAGE</div><div class="tp">$124.99<s>/yr</s></div><div class="td">Adds Dolby Atmos, unlimited publishing registration and global royalty collection.</div></div>
+        <div class="tier hl"><div class="tn">GROW</div><div class="tp">$199.99<s>/yr</s></div><div class="td">Adds three websites, unlimited Listening Parties and the AI Music Manager.</div></div>
+      </div>
+      <div class="td" style="margin-top:5px">Publishing admin takes 15% of what we actually collect &mdash; the rest hits the artist&rsquo;s bank account directly.</div>
+    </div>
+  </div>
+
+  <div class="dream">
+    <div class="dq">Imagine a world where musicians can simply focus on making the music &mdash; and not on operating a business in one of the most confusing markets there is.</div>
+    <div class="ds">Some artists find a manager and the job gets easier. Most never will. Every artist deserves the infrastructure anyway.</div>
+  </div>
+
+  <div>
+    <div class="micro" style="margin-bottom:5px">Team</div>
+    <div class="team">
+      <div class="tm"><div class="tmn">Matthew St. Pierre</div><div class="tmr">FOUNDER &amp; CEO</div><div class="tmb">Nearly a decade in music, credits across 100M+ streams. Founder of the Lonely Listeners Club.</div></div>
+      <div class="tm"><div class="tmn">Vinay Singh</div><div class="tmr">CHIEF TECHNOLOGY OFFICER</div><div class="tmb">Fifteen years in full-stack engineering. Founder of Ajna Inc; built identity-verification systems for the Government of India.</div></div>
+      <div class="tm"><div class="tmn">Everton Lewis Jr.</div><div class="tmr">PARTNERSHIPS</div><div class="tmb">Former music supervisor at Apple and Head of Supervision at VICE, founder of Wracket Music.</div></div>
+    </div>
+    <div class="adv">Advised by Nate Wolfe (ex-Ethereum), Mustafa Abdel Fattah and Ayman Abdalla, with mentorship through Creative Destruction Lab and The Forge.</div>
+  </div>
+
+  <div>
+    <div class="micro" style="margin-bottom:5px">The ask &middot; $250,000 to reach profitability without a bridge</div>
+    <div class="bks">
+      <div class="bk"><div class="bkn">STAFFING &middot; 38%</div><div class="bkd">Full-time founding team, in-house marketing and administrative team.</div></div>
+      <div class="bk"><div class="bkn">ACQUISITION &middot; 34%</div><div class="bkd">Paid and influencer channels on top of the community funnel, at benchmarked CPAs.</div></div>
+      <div class="bk"><div class="bkn">ENGINEERING &middot; 17%</div><div class="bkd">Finish the rails, harden the AI Manager, ship the December release.</div></div>
+      <div class="bk"><div class="bkn">LEGAL &amp; IP &middot; 8%</div><div class="bkd">Publishing admin, curator network expansion, marketplace legal lane.</div></div>
+    </div>
+    <div class="derisk">Secured capital already carries us to profitability. This round is not survival &mdash; it&rsquo;s speed.</div>
+  </div>
+
+  <div class="foot">
+    <div class="fc">
+      <b>Matthew St. Pierre</b> &middot; Founder &amp; CEO &middot; matthew@lisnin.io &middot; lisnin.io<br/>
+      Lead investor closed &middot; $110K cloud credits approved &middot; non-dilutive pipeline out.<br/>
+      <span style="color:rgba(12,11,9,.46)">Lisnin Music Inc. &middot; Confidential &middot; Full model, cap table and data room on request.</span>
+    </div>
+    <div class="qr">
+      <!--QR-->
+      <div class="qrl">Scan: 60-second walkthrough</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
