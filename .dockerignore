@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+.next
+.vercel
+.claude
+.agents
+.env*
+*.tsbuildinfo
+npm-debug.log*
+.DS_Store
+scripts/onesheet
