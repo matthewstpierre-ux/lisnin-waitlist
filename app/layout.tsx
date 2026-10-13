@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Epilogue, Outfit } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SOCIAL_LINKS, FAQS } from "@/lib/constants";
 import "./globals.css";
 
@@ -206,8 +204,6 @@ export default function RootLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{ __html: CLARITY_SCRIPT }}
         />
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
