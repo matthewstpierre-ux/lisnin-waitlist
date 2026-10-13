@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Epilogue, Outfit } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SOCIAL_LINKS, FAQS } from "@/lib/constants";
@@ -169,6 +170,18 @@ const jsonLd = {
   ],
 };
 
+/**
+ * Microsoft Clarity. Loaded after hydration so session recording never
+ * competes with first paint; the tag itself then injects its own async script.
+ */
+const CLARITY_PROJECT_ID = "yx2h7yklw7";
+
+const CLARITY_SCRIPT = `(function(c,l,a,r,i,t,y){
+  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+})(window, document, "clarity", "script", "${CLARITY_PROJECT_ID}");`;
+
 const THEME_INIT_SCRIPT = `(function(){
   var t = localStorage.getItem('biz-theme');
   if (t === 'dark') document.documentElement.setAttribute('data-theme','dark');
@@ -188,6 +201,11 @@ export default function RootLayout({
       </head>
       <body>
         {children}
+        <Script
+          id="ms-clarity"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: CLARITY_SCRIPT }}
+        />
         <Analytics />
         <SpeedInsights />
       </body>
